@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "TEACHERGPT" },
+      { name: "description", content: "TeachMate AI is a responsive web application that serves as an AI-powered teaching platform for educators." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "TEACHERGPT" },
+      { property: "og:description", content: "TeachMate AI is a responsive web application that serves as an AI-powered teaching platform for educators." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "TEACHERGPT" },
+      { name: "twitter:description", content: "TeachMate AI is a responsive web application that serves as an AI-powered teaching platform for educators." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/2zezRrfrrBRyrAHp0lSSHuRcEom1/social-images/social-1780656312350-LOGO.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/2zezRrfrrBRyrAHp0lSSHuRcEom1/social-images/social-1780656312350-LOGO.webp" },
     ],
     links: [
       {
