@@ -11,7 +11,28 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppWeeklyBundleRouteImport } from './routes/_app.weekly-bundle'
+import { Route as AppTermReportRouteImport } from './routes/_app.term-report'
+import { Route as AppSubmissionsRouteImport } from './routes/_app.submissions'
+import { Route as AppSubjectDashboardRouteImport } from './routes/_app.subject-dashboard'
+import { Route as AppStudentSummaryRouteImport } from './routes/_app.student-summary'
+import { Route as AppSeatingChartRouteImport } from './routes/_app.seating-chart'
+import { Route as AppResourcesRouteImport } from './routes/_app.resources'
+import { Route as AppQuestionBankRouteImport } from './routes/_app.question-bank'
+import { Route as AppParentPortalRouteImport } from './routes/_app.parent-portal'
+import { Route as AppParentAccessRouteImport } from './routes/_app.parent-access'
+import { Route as AppOnlineMeetingsRouteImport } from './routes/_app.online-meetings'
+import { Route as AppMyTasksRouteImport } from './routes/_app.my-tasks'
+import { Route as AppMasterCalendarRouteImport } from './routes/_app.master-calendar'
+import { Route as AppLessonPlansRouteImport } from './routes/_app.lesson-plans'
+import { Route as AppLessonNotesRouteImport } from './routes/_app.lesson-notes'
+import { Route as AppGradeGridRouteImport } from './routes/_app.grade-grid'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppBulkGradingRouteImport } from './routes/_app.bulk-grading'
+import { Route as AppAttendanceRouteImport } from './routes/_app.attendance'
+import { Route as AppAssessmentsRouteImport } from './routes/_app.assessments'
+import { Route as AppAnalyticsRouteImport } from './routes/_app.analytics'
+import { Route as AppAiAssistantRouteImport } from './routes/_app.ai-assistant'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -22,32 +43,271 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppWeeklyBundleRoute = AppWeeklyBundleRouteImport.update({
+  id: '/weekly-bundle',
+  path: '/weekly-bundle',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTermReportRoute = AppTermReportRouteImport.update({
+  id: '/term-report',
+  path: '/term-report',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSubmissionsRoute = AppSubmissionsRouteImport.update({
+  id: '/submissions',
+  path: '/submissions',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSubjectDashboardRoute = AppSubjectDashboardRouteImport.update({
+  id: '/subject-dashboard',
+  path: '/subject-dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStudentSummaryRoute = AppStudentSummaryRouteImport.update({
+  id: '/student-summary',
+  path: '/student-summary',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSeatingChartRoute = AppSeatingChartRouteImport.update({
+  id: '/seating-chart',
+  path: '/seating-chart',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppResourcesRoute = AppResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppQuestionBankRoute = AppQuestionBankRouteImport.update({
+  id: '/question-bank',
+  path: '/question-bank',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppParentPortalRoute = AppParentPortalRouteImport.update({
+  id: '/parent-portal',
+  path: '/parent-portal',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppParentAccessRoute = AppParentAccessRouteImport.update({
+  id: '/parent-access',
+  path: '/parent-access',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOnlineMeetingsRoute = AppOnlineMeetingsRouteImport.update({
+  id: '/online-meetings',
+  path: '/online-meetings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMyTasksRoute = AppMyTasksRouteImport.update({
+  id: '/my-tasks',
+  path: '/my-tasks',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppMasterCalendarRoute = AppMasterCalendarRouteImport.update({
+  id: '/master-calendar',
+  path: '/master-calendar',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLessonPlansRoute = AppLessonPlansRouteImport.update({
+  id: '/lesson-plans',
+  path: '/lesson-plans',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppLessonNotesRoute = AppLessonNotesRouteImport.update({
+  id: '/lesson-notes',
+  path: '/lesson-notes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppGradeGridRoute = AppGradeGridRouteImport.update({
+  id: '/grade-grid',
+  path: '/grade-grid',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDashboardRoute = AppDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppBulkGradingRoute = AppBulkGradingRouteImport.update({
+  id: '/bulk-grading',
+  path: '/bulk-grading',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAttendanceRoute = AppAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAssessmentsRoute = AppAssessmentsRouteImport.update({
+  id: '/assessments',
+  path: '/assessments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnalyticsRoute = AppAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAiAssistantRoute = AppAiAssistantRouteImport.update({
+  id: '/ai-assistant',
+  path: '/ai-assistant',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-assistant': typeof AppAiAssistantRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/assessments': typeof AppAssessmentsRoute
+  '/attendance': typeof AppAttendanceRoute
+  '/bulk-grading': typeof AppBulkGradingRoute
   '/dashboard': typeof AppDashboardRoute
+  '/grade-grid': typeof AppGradeGridRoute
+  '/lesson-notes': typeof AppLessonNotesRoute
+  '/lesson-plans': typeof AppLessonPlansRoute
+  '/master-calendar': typeof AppMasterCalendarRoute
+  '/my-tasks': typeof AppMyTasksRoute
+  '/online-meetings': typeof AppOnlineMeetingsRoute
+  '/parent-access': typeof AppParentAccessRoute
+  '/parent-portal': typeof AppParentPortalRoute
+  '/question-bank': typeof AppQuestionBankRoute
+  '/resources': typeof AppResourcesRoute
+  '/seating-chart': typeof AppSeatingChartRoute
+  '/student-summary': typeof AppStudentSummaryRoute
+  '/subject-dashboard': typeof AppSubjectDashboardRoute
+  '/submissions': typeof AppSubmissionsRoute
+  '/term-report': typeof AppTermReportRoute
+  '/weekly-bundle': typeof AppWeeklyBundleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-assistant': typeof AppAiAssistantRoute
+  '/analytics': typeof AppAnalyticsRoute
+  '/assessments': typeof AppAssessmentsRoute
+  '/attendance': typeof AppAttendanceRoute
+  '/bulk-grading': typeof AppBulkGradingRoute
   '/dashboard': typeof AppDashboardRoute
+  '/grade-grid': typeof AppGradeGridRoute
+  '/lesson-notes': typeof AppLessonNotesRoute
+  '/lesson-plans': typeof AppLessonPlansRoute
+  '/master-calendar': typeof AppMasterCalendarRoute
+  '/my-tasks': typeof AppMyTasksRoute
+  '/online-meetings': typeof AppOnlineMeetingsRoute
+  '/parent-access': typeof AppParentAccessRoute
+  '/parent-portal': typeof AppParentPortalRoute
+  '/question-bank': typeof AppQuestionBankRoute
+  '/resources': typeof AppResourcesRoute
+  '/seating-chart': typeof AppSeatingChartRoute
+  '/student-summary': typeof AppStudentSummaryRoute
+  '/subject-dashboard': typeof AppSubjectDashboardRoute
+  '/submissions': typeof AppSubmissionsRoute
+  '/term-report': typeof AppTermReportRoute
+  '/weekly-bundle': typeof AppWeeklyBundleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/ai-assistant': typeof AppAiAssistantRoute
+  '/_app/analytics': typeof AppAnalyticsRoute
+  '/_app/assessments': typeof AppAssessmentsRoute
+  '/_app/attendance': typeof AppAttendanceRoute
+  '/_app/bulk-grading': typeof AppBulkGradingRoute
   '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/grade-grid': typeof AppGradeGridRoute
+  '/_app/lesson-notes': typeof AppLessonNotesRoute
+  '/_app/lesson-plans': typeof AppLessonPlansRoute
+  '/_app/master-calendar': typeof AppMasterCalendarRoute
+  '/_app/my-tasks': typeof AppMyTasksRoute
+  '/_app/online-meetings': typeof AppOnlineMeetingsRoute
+  '/_app/parent-access': typeof AppParentAccessRoute
+  '/_app/parent-portal': typeof AppParentPortalRoute
+  '/_app/question-bank': typeof AppQuestionBankRoute
+  '/_app/resources': typeof AppResourcesRoute
+  '/_app/seating-chart': typeof AppSeatingChartRoute
+  '/_app/student-summary': typeof AppStudentSummaryRoute
+  '/_app/subject-dashboard': typeof AppSubjectDashboardRoute
+  '/_app/submissions': typeof AppSubmissionsRoute
+  '/_app/term-report': typeof AppTermReportRoute
+  '/_app/weekly-bundle': typeof AppWeeklyBundleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/ai-assistant'
+    | '/analytics'
+    | '/assessments'
+    | '/attendance'
+    | '/bulk-grading'
+    | '/dashboard'
+    | '/grade-grid'
+    | '/lesson-notes'
+    | '/lesson-plans'
+    | '/master-calendar'
+    | '/my-tasks'
+    | '/online-meetings'
+    | '/parent-access'
+    | '/parent-portal'
+    | '/question-bank'
+    | '/resources'
+    | '/seating-chart'
+    | '/student-summary'
+    | '/subject-dashboard'
+    | '/submissions'
+    | '/term-report'
+    | '/weekly-bundle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard'
-  id: '__root__' | '/' | '/_app' | '/_app/dashboard'
+  to:
+    | '/'
+    | '/ai-assistant'
+    | '/analytics'
+    | '/assessments'
+    | '/attendance'
+    | '/bulk-grading'
+    | '/dashboard'
+    | '/grade-grid'
+    | '/lesson-notes'
+    | '/lesson-plans'
+    | '/master-calendar'
+    | '/my-tasks'
+    | '/online-meetings'
+    | '/parent-access'
+    | '/parent-portal'
+    | '/question-bank'
+    | '/resources'
+    | '/seating-chart'
+    | '/student-summary'
+    | '/subject-dashboard'
+    | '/submissions'
+    | '/term-report'
+    | '/weekly-bundle'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/_app/ai-assistant'
+    | '/_app/analytics'
+    | '/_app/assessments'
+    | '/_app/attendance'
+    | '/_app/bulk-grading'
+    | '/_app/dashboard'
+    | '/_app/grade-grid'
+    | '/_app/lesson-notes'
+    | '/_app/lesson-plans'
+    | '/_app/master-calendar'
+    | '/_app/my-tasks'
+    | '/_app/online-meetings'
+    | '/_app/parent-access'
+    | '/_app/parent-portal'
+    | '/_app/question-bank'
+    | '/_app/resources'
+    | '/_app/seating-chart'
+    | '/_app/student-summary'
+    | '/_app/subject-dashboard'
+    | '/_app/submissions'
+    | '/_app/term-report'
+    | '/_app/weekly-bundle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -71,6 +331,118 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/weekly-bundle': {
+      id: '/_app/weekly-bundle'
+      path: '/weekly-bundle'
+      fullPath: '/weekly-bundle'
+      preLoaderRoute: typeof AppWeeklyBundleRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/term-report': {
+      id: '/_app/term-report'
+      path: '/term-report'
+      fullPath: '/term-report'
+      preLoaderRoute: typeof AppTermReportRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/submissions': {
+      id: '/_app/submissions'
+      path: '/submissions'
+      fullPath: '/submissions'
+      preLoaderRoute: typeof AppSubmissionsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/subject-dashboard': {
+      id: '/_app/subject-dashboard'
+      path: '/subject-dashboard'
+      fullPath: '/subject-dashboard'
+      preLoaderRoute: typeof AppSubjectDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/student-summary': {
+      id: '/_app/student-summary'
+      path: '/student-summary'
+      fullPath: '/student-summary'
+      preLoaderRoute: typeof AppStudentSummaryRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/seating-chart': {
+      id: '/_app/seating-chart'
+      path: '/seating-chart'
+      fullPath: '/seating-chart'
+      preLoaderRoute: typeof AppSeatingChartRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/resources': {
+      id: '/_app/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AppResourcesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/question-bank': {
+      id: '/_app/question-bank'
+      path: '/question-bank'
+      fullPath: '/question-bank'
+      preLoaderRoute: typeof AppQuestionBankRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/parent-portal': {
+      id: '/_app/parent-portal'
+      path: '/parent-portal'
+      fullPath: '/parent-portal'
+      preLoaderRoute: typeof AppParentPortalRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/parent-access': {
+      id: '/_app/parent-access'
+      path: '/parent-access'
+      fullPath: '/parent-access'
+      preLoaderRoute: typeof AppParentAccessRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/online-meetings': {
+      id: '/_app/online-meetings'
+      path: '/online-meetings'
+      fullPath: '/online-meetings'
+      preLoaderRoute: typeof AppOnlineMeetingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/my-tasks': {
+      id: '/_app/my-tasks'
+      path: '/my-tasks'
+      fullPath: '/my-tasks'
+      preLoaderRoute: typeof AppMyTasksRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/master-calendar': {
+      id: '/_app/master-calendar'
+      path: '/master-calendar'
+      fullPath: '/master-calendar'
+      preLoaderRoute: typeof AppMasterCalendarRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/lesson-plans': {
+      id: '/_app/lesson-plans'
+      path: '/lesson-plans'
+      fullPath: '/lesson-plans'
+      preLoaderRoute: typeof AppLessonPlansRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/lesson-notes': {
+      id: '/_app/lesson-notes'
+      path: '/lesson-notes'
+      fullPath: '/lesson-notes'
+      preLoaderRoute: typeof AppLessonNotesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/grade-grid': {
+      id: '/_app/grade-grid'
+      path: '/grade-grid'
+      fullPath: '/grade-grid'
+      preLoaderRoute: typeof AppGradeGridRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/dashboard': {
       id: '/_app/dashboard'
       path: '/dashboard'
@@ -78,15 +450,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/bulk-grading': {
+      id: '/_app/bulk-grading'
+      path: '/bulk-grading'
+      fullPath: '/bulk-grading'
+      preLoaderRoute: typeof AppBulkGradingRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/attendance': {
+      id: '/_app/attendance'
+      path: '/attendance'
+      fullPath: '/attendance'
+      preLoaderRoute: typeof AppAttendanceRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/assessments': {
+      id: '/_app/assessments'
+      path: '/assessments'
+      fullPath: '/assessments'
+      preLoaderRoute: typeof AppAssessmentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/analytics': {
+      id: '/_app/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AppAnalyticsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/ai-assistant': {
+      id: '/_app/ai-assistant'
+      path: '/ai-assistant'
+      fullPath: '/ai-assistant'
+      preLoaderRoute: typeof AppAiAssistantRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppAiAssistantRoute: typeof AppAiAssistantRoute
+  AppAnalyticsRoute: typeof AppAnalyticsRoute
+  AppAssessmentsRoute: typeof AppAssessmentsRoute
+  AppAttendanceRoute: typeof AppAttendanceRoute
+  AppBulkGradingRoute: typeof AppBulkGradingRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppGradeGridRoute: typeof AppGradeGridRoute
+  AppLessonNotesRoute: typeof AppLessonNotesRoute
+  AppLessonPlansRoute: typeof AppLessonPlansRoute
+  AppMasterCalendarRoute: typeof AppMasterCalendarRoute
+  AppMyTasksRoute: typeof AppMyTasksRoute
+  AppOnlineMeetingsRoute: typeof AppOnlineMeetingsRoute
+  AppParentAccessRoute: typeof AppParentAccessRoute
+  AppParentPortalRoute: typeof AppParentPortalRoute
+  AppQuestionBankRoute: typeof AppQuestionBankRoute
+  AppResourcesRoute: typeof AppResourcesRoute
+  AppSeatingChartRoute: typeof AppSeatingChartRoute
+  AppStudentSummaryRoute: typeof AppStudentSummaryRoute
+  AppSubjectDashboardRoute: typeof AppSubjectDashboardRoute
+  AppSubmissionsRoute: typeof AppSubmissionsRoute
+  AppTermReportRoute: typeof AppTermReportRoute
+  AppWeeklyBundleRoute: typeof AppWeeklyBundleRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAiAssistantRoute: AppAiAssistantRoute,
+  AppAnalyticsRoute: AppAnalyticsRoute,
+  AppAssessmentsRoute: AppAssessmentsRoute,
+  AppAttendanceRoute: AppAttendanceRoute,
+  AppBulkGradingRoute: AppBulkGradingRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppGradeGridRoute: AppGradeGridRoute,
+  AppLessonNotesRoute: AppLessonNotesRoute,
+  AppLessonPlansRoute: AppLessonPlansRoute,
+  AppMasterCalendarRoute: AppMasterCalendarRoute,
+  AppMyTasksRoute: AppMyTasksRoute,
+  AppOnlineMeetingsRoute: AppOnlineMeetingsRoute,
+  AppParentAccessRoute: AppParentAccessRoute,
+  AppParentPortalRoute: AppParentPortalRoute,
+  AppQuestionBankRoute: AppQuestionBankRoute,
+  AppResourcesRoute: AppResourcesRoute,
+  AppSeatingChartRoute: AppSeatingChartRoute,
+  AppStudentSummaryRoute: AppStudentSummaryRoute,
+  AppSubjectDashboardRoute: AppSubjectDashboardRoute,
+  AppSubmissionsRoute: AppSubmissionsRoute,
+  AppTermReportRoute: AppTermReportRoute,
+  AppWeeklyBundleRoute: AppWeeklyBundleRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
