@@ -42,15 +42,15 @@ export const generateAI = createServerFn({ method: "POST" })
     }
     const out = await res.json();
     const content: string = out?.choices?.[0]?.message?.content ?? "";
+    let parsed: unknown = null;
     if (data.json) {
       try {
-        return { data: JSON.parse(content) as unknown, raw: content };
+        parsed = JSON.parse(content);
       } catch {
-        // try to extract JSON
         const m = content.match(/\{[\s\S]*\}/);
-        if (m) return { data: JSON.parse(m[0]) as unknown, raw: content };
-        throw new Error("AI returned invalid JSON");
+        if (m) parsed = JSON.parse(m[0]);
+        else throw new Error("AI returned invalid JSON");
       }
     }
-    return { data: content, raw: content };
+    return { text: content, json: JSON.stringify(parsed) };
   });
