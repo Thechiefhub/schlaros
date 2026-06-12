@@ -78,21 +78,29 @@ function Landing() {
           </div>
           <div>
             <div className="text-gradient-primary font-display text-xl font-bold">TeacherGPT</div>
-            <div className="text-xs text-muted-foreground">Teach More Impact</div>
+            <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Academic OS · Africa</div>
           </div>
         </div>
         <div className="hidden items-center gap-8 md:flex">
           <a href="#features" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Features</a>
           <a href="#how" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">How it works</a>
-          <a href="#love" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Teachers ♥</a>
+          <a href="#love" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Educators</a>
           <a href="#faq" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">FAQ</a>
         </div>
-        <Link
-          to="/dashboard"
-          className="bg-gradient-primary glow-primary rounded-2xl px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
-        >
-          Sign Up
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/dashboard"
+            className="hidden rounded-2xl border border-border bg-white/70 px-4 py-2.5 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-white sm:inline-flex"
+          >
+            Sign In
+          </Link>
+          <Link
+            to="/dashboard"
+            className="bg-gradient-primary glow-primary rounded-2xl px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
+          >
+            Get Started
+          </Link>
+        </div>
       </nav>
 
       {/* HERO */}
