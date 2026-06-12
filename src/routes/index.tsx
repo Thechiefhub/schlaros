@@ -2,18 +2,18 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import {
-  GraduationCap, Sparkles, Zap, Brain, Users, ArrowRight, Star, Check,
-  FileText, ClipboardList, BarChart3, Bot, Calendar, MessageCircle,
-  Quote, Play, ChevronDown, Rocket, Heart, Globe, Award,
+  GraduationCap, Sparkles, Zap, Brain, ArrowRight, Star, Check,
+  ClipboardList, BarChart3, Bot, Calendar, MessageCircle,
+  Quote, ChevronDown, Rocket, Heart, Globe, Award,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TeacherGPT — Teach More, Impact More" },
-      { name: "description", content: "AI co-teacher for the modern classroom. Plan lessons, grade assessments, and track every student — in half the time." },
-      { property: "og:title", content: "TeacherGPT — Teach More, Impact More" },
-      { property: "og:description", content: "AI co-teacher for the modern classroom. Plan, grade, track — in half the time." },
+      { title: "TeacherGPT — AI-powered Academic Operating System for Africa" },
+      { name: "description", content: "An AI-powered Academic Operating System for Africa. Plan lessons, grade assessments, and track every student — built for African schools." },
+      { property: "og:title", content: "TeacherGPT — AI Academic OS for Africa" },
+      { property: "og:description", content: "An AI-powered Academic Operating System for Africa. Built for teachers, schools, parents and students." },
       { property: "og:type", content: "website" },
     ],
   }),
@@ -78,21 +78,29 @@ function Landing() {
           </div>
           <div>
             <div className="text-gradient-primary font-display text-xl font-bold">TeacherGPT</div>
-            <div className="text-xs text-muted-foreground">Teach More Impact</div>
+            <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Academic OS · Africa</div>
           </div>
         </div>
         <div className="hidden items-center gap-8 md:flex">
           <a href="#features" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Features</a>
           <a href="#how" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">How it works</a>
-          <a href="#love" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Teachers ♥</a>
+          <a href="#love" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Educators</a>
           <a href="#faq" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">FAQ</a>
         </div>
-        <Link
-          to="/dashboard"
-          className="bg-gradient-primary glow-primary rounded-2xl px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
-        >
-          Sign Up
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/dashboard"
+            className="hidden rounded-2xl border border-border bg-white/70 px-4 py-2.5 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-white sm:inline-flex"
+          >
+            Sign In
+          </Link>
+          <Link
+            to="/dashboard"
+            className="bg-gradient-primary glow-primary rounded-2xl px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
+          >
+            Get Started
+          </Link>
+        </div>
       </nav>
 
       {/* HERO */}
@@ -106,7 +114,7 @@ function Landing() {
           className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-white/70 px-4 py-1.5 text-xs font-semibold backdrop-blur-md"
         >
           <Star className="h-3.5 w-3.5 fill-amber text-amber" />
-          Loved by 10,000+ educators in 47 countries
+          Trusted by educators across 47 African nations
         </motion.div>
 
         <motion.h1
@@ -115,8 +123,8 @@ function Landing() {
           transition={{ delay: 0.1 }}
           className="font-display text-5xl leading-[1.02] font-bold md:text-7xl"
         >
-          Your AI co-teacher.<br />
-          <span className="text-gradient-primary">Built for legends.</span>
+          The Academic OS.<br />
+          <span className="text-gradient-primary">Built for Africa.</span>
         </motion.h1>
 
         <motion.p
@@ -125,7 +133,7 @@ function Landing() {
           transition={{ delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
         >
-          TeacherGPT plans your lessons, grades your tests, tracks every student, and gives you back the hours you deserve — so you can do what you love. Teach.
+          <span className="font-semibold text-foreground">An AI-powered Academic Operating System for Africa.</span> TeacherGPT unifies lesson planning, grading, attendance, analytics, and parent communication — so schools run smarter and teachers teach freer.
         </motion.p>
 
         <motion.div
@@ -138,15 +146,24 @@ function Landing() {
             to="/dashboard"
             className="bg-gradient-primary glow-primary group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-white transition-transform hover:scale-105"
           >
-            Sign Up — It's Free
+            Get Started Free
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
-          <a
-            href="#how"
+          <Link
+            to="/dashboard"
             className="glass inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-foreground transition-all hover:-translate-y-0.5"
           >
-            <Play className="h-5 w-5 fill-foreground" /> Watch 60s demo
-          </a>
+            Sign In to your account
+          </Link>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.45 }}
+          className="mt-4 text-xs text-muted-foreground"
+        >
+          For admins · teachers · parents · students
         </motion.div>
 
         <motion.div
