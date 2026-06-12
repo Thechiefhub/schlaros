@@ -148,7 +148,7 @@ export const SECTIONS: MenuSection[] = [
     roles: ["admin"],
     items: [
       { label: "Teachers", icon: Briefcase, comingSoon: true },
-      { label: "Students", icon: GradCap, comingSoon: true },
+      { label: "Students", icon: GraduationCap, comingSoon: true },
       { label: "Classes", icon: Layers, comingSoon: true },
       { label: "Departments", icon: Building2, comingSoon: true },
       { label: "Subjects", icon: BookMarked, comingSoon: true },
