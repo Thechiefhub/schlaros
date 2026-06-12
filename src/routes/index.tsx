@@ -10,10 +10,10 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TeacherGPT — Teach More, Impact More" },
-      { name: "description", content: "AI co-teacher for the modern classroom. Plan lessons, grade assessments, and track every student — in half the time." },
-      { property: "og:title", content: "TeacherGPT — Teach More, Impact More" },
-      { property: "og:description", content: "AI co-teacher for the modern classroom. Plan, grade, track — in half the time." },
+      { title: "TeacherGPT — AI-powered Academic Operating System for Africa" },
+      { name: "description", content: "An AI-powered Academic Operating System for Africa. Plan lessons, grade assessments, and track every student — built for African schools." },
+      { property: "og:title", content: "TeacherGPT — AI Academic OS for Africa" },
+      { property: "og:description", content: "An AI-powered Academic Operating System for Africa. Built for teachers, schools, parents and students." },
       { property: "og:type", content: "website" },
     ],
   }),
