@@ -27,7 +27,6 @@ import {
   Globe2,
   Sparkles,
   Building2,
-  GraduationCap as GradCap,
   CalendarRange,
   Layers,
   PieChart,
