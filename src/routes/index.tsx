@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import {
   GraduationCap, Sparkles, Zap, Brain, Users, ArrowRight, Star, Check,
-  FileText, ClipboardList, BarChart3, Bot, Calendar, MessageCircle,
+  ClipboardList, BarChart3, Bot, Calendar, MessageCircle,
   Quote, ChevronDown, Rocket, Heart, Globe, Award,
 } from "lucide-react";
 
