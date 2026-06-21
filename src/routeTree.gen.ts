@@ -38,6 +38,7 @@ import { Route as AppLessonNotesRouteImport } from './routes/_app.lesson-notes'
 import { Route as AppGradeGridRouteImport } from './routes/_app.grade-grid'
 import { Route as AppDepartmentsRouteImport } from './routes/_app.departments'
 import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppCurriculumRouteImport } from './routes/_app.curriculum'
 import { Route as AppClassesRouteImport } from './routes/_app.classes'
 import { Route as AppBulkGradingRouteImport } from './routes/_app.bulk-grading'
 import { Route as AppAttendanceRouteImport } from './routes/_app.attendance'
@@ -190,6 +191,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCurriculumRoute = AppCurriculumRouteImport.update({
+  id: '/curriculum',
+  path: '/curriculum',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppClassesRoute = AppClassesRouteImport.update({
   id: '/classes',
   path: '/classes',
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/attendance': typeof AppAttendanceRoute
   '/bulk-grading': typeof AppBulkGradingRoute
   '/classes': typeof AppClassesRoute
+  '/curriculum': typeof AppCurriculumRoute
   '/dashboard': typeof AppDashboardRoute
   '/departments': typeof AppDepartmentsRoute
   '/grade-grid': typeof AppGradeGridRoute
@@ -272,6 +279,7 @@ export interface FileRoutesByTo {
   '/attendance': typeof AppAttendanceRoute
   '/bulk-grading': typeof AppBulkGradingRoute
   '/classes': typeof AppClassesRoute
+  '/curriculum': typeof AppCurriculumRoute
   '/dashboard': typeof AppDashboardRoute
   '/departments': typeof AppDepartmentsRoute
   '/grade-grid': typeof AppGradeGridRoute
@@ -311,6 +319,7 @@ export interface FileRoutesById {
   '/_app/attendance': typeof AppAttendanceRoute
   '/_app/bulk-grading': typeof AppBulkGradingRoute
   '/_app/classes': typeof AppClassesRoute
+  '/_app/curriculum': typeof AppCurriculumRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/departments': typeof AppDepartmentsRoute
   '/_app/grade-grid': typeof AppGradeGridRoute
@@ -350,6 +359,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/bulk-grading'
     | '/classes'
+    | '/curriculum'
     | '/dashboard'
     | '/departments'
     | '/grade-grid'
@@ -387,6 +397,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/bulk-grading'
     | '/classes'
+    | '/curriculum'
     | '/dashboard'
     | '/departments'
     | '/grade-grid'
@@ -425,6 +436,7 @@ export interface FileRouteTypes {
     | '/_app/attendance'
     | '/_app/bulk-grading'
     | '/_app/classes'
+    | '/_app/curriculum'
     | '/_app/dashboard'
     | '/_app/departments'
     | '/_app/grade-grid'
@@ -666,6 +678,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/curriculum': {
+      id: '/_app/curriculum'
+      path: '/curriculum'
+      fullPath: '/curriculum'
+      preLoaderRoute: typeof AppCurriculumRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/classes': {
       id: '/_app/classes'
       path: '/classes'
@@ -726,6 +745,7 @@ interface AppRouteChildren {
   AppAttendanceRoute: typeof AppAttendanceRoute
   AppBulkGradingRoute: typeof AppBulkGradingRoute
   AppClassesRoute: typeof AppClassesRoute
+  AppCurriculumRoute: typeof AppCurriculumRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppDepartmentsRoute: typeof AppDepartmentsRoute
   AppGradeGridRoute: typeof AppGradeGridRoute
@@ -761,6 +781,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAttendanceRoute: AppAttendanceRoute,
   AppBulkGradingRoute: AppBulkGradingRoute,
   AppClassesRoute: AppClassesRoute,
+  AppCurriculumRoute: AppCurriculumRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppDepartmentsRoute: AppDepartmentsRoute,
   AppGradeGridRoute: AppGradeGridRoute,
