@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as QSlugRouteImport } from './routes/q.$slug'
+import { Route as MSlugRouteImport } from './routes/m.$slug'
 import { Route as AppWeeklyBundleRouteImport } from './routes/_app.weekly-bundle'
 import { Route as AppTimetablesRouteImport } from './routes/_app.timetables'
 import { Route as AppTimetableManagementRouteImport } from './routes/_app.timetable-management'
@@ -51,6 +53,16 @@ const AppRoute = AppRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QSlugRoute = QSlugRouteImport.update({
+  id: '/q/$slug',
+  path: '/q/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MSlugRoute = MSlugRouteImport.update({
+  id: '/m/$slug',
+  path: '/m/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppWeeklyBundleRoute = AppWeeklyBundleRouteImport.update({
@@ -248,6 +260,8 @@ export interface FileRoutesByFullPath {
   '/timetable-management': typeof AppTimetableManagementRoute
   '/timetables': typeof AppTimetablesRoute
   '/weekly-bundle': typeof AppWeeklyBundleRoute
+  '/m/$slug': typeof MSlugRoute
+  '/q/$slug': typeof QSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -283,6 +297,8 @@ export interface FileRoutesByTo {
   '/timetable-management': typeof AppTimetableManagementRoute
   '/timetables': typeof AppTimetablesRoute
   '/weekly-bundle': typeof AppWeeklyBundleRoute
+  '/m/$slug': typeof MSlugRoute
+  '/q/$slug': typeof QSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -320,6 +336,8 @@ export interface FileRoutesById {
   '/_app/timetable-management': typeof AppTimetableManagementRoute
   '/_app/timetables': typeof AppTimetablesRoute
   '/_app/weekly-bundle': typeof AppWeeklyBundleRoute
+  '/m/$slug': typeof MSlugRoute
+  '/q/$slug': typeof QSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -357,6 +375,8 @@ export interface FileRouteTypes {
     | '/timetable-management'
     | '/timetables'
     | '/weekly-bundle'
+    | '/m/$slug'
+    | '/q/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -392,6 +412,8 @@ export interface FileRouteTypes {
     | '/timetable-management'
     | '/timetables'
     | '/weekly-bundle'
+    | '/m/$slug'
+    | '/q/$slug'
   id:
     | '__root__'
     | '/'
@@ -428,11 +450,15 @@ export interface FileRouteTypes {
     | '/_app/timetable-management'
     | '/_app/timetables'
     | '/_app/weekly-bundle'
+    | '/m/$slug'
+    | '/q/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  MSlugRoute: typeof MSlugRoute
+  QSlugRoute: typeof QSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -449,6 +475,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/q/$slug': {
+      id: '/q/$slug'
+      path: '/q/$slug'
+      fullPath: '/q/$slug'
+      preLoaderRoute: typeof QSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/m/$slug': {
+      id: '/m/$slug'
+      path: '/m/$slug'
+      fullPath: '/m/$slug'
+      preLoaderRoute: typeof MSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/weekly-bundle': {
@@ -753,6 +793,8 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  MSlugRoute: MSlugRoute,
+  QSlugRoute: QSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
