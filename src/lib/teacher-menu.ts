@@ -165,7 +165,7 @@ export const MENU: MenuItem[] = SECTIONS.flatMap((s) => s.items).filter((i) => i
 
 export const APP_BRAND = {
   name: "SchlarOS",
-  tagline: "AI School OS",
+  tagline: "Modern Education OS",
   icon: GraduationCap,
 };
 
