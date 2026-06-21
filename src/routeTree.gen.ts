@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppWeeklyBundleRouteImport } from './routes/_app.weekly-bundle'
+import { Route as AppTimetablesRouteImport } from './routes/_app.timetables'
+import { Route as AppTimetableManagementRouteImport } from './routes/_app.timetable-management'
 import { Route as AppTermReportRouteImport } from './routes/_app.term-report'
 import { Route as AppTeachersRouteImport } from './routes/_app.teachers'
 import { Route as AppSubmissionsRouteImport } from './routes/_app.submissions'
@@ -20,6 +22,7 @@ import { Route as AppSubjectDashboardRouteImport } from './routes/_app.subject-d
 import { Route as AppStudentsRouteImport } from './routes/_app.students'
 import { Route as AppStudentSummaryRouteImport } from './routes/_app.student-summary'
 import { Route as AppSeatingChartRouteImport } from './routes/_app.seating-chart'
+import { Route as AppSchoolAnalyticsRouteImport } from './routes/_app.school-analytics'
 import { Route as AppResourcesRouteImport } from './routes/_app.resources'
 import { Route as AppQuestionBankRouteImport } from './routes/_app.question-bank'
 import { Route as AppParentPortalRouteImport } from './routes/_app.parent-portal'
@@ -53,6 +56,16 @@ const IndexRoute = IndexRouteImport.update({
 const AppWeeklyBundleRoute = AppWeeklyBundleRouteImport.update({
   id: '/weekly-bundle',
   path: '/weekly-bundle',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTimetablesRoute = AppTimetablesRouteImport.update({
+  id: '/timetables',
+  path: '/timetables',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTimetableManagementRoute = AppTimetableManagementRouteImport.update({
+  id: '/timetable-management',
+  path: '/timetable-management',
   getParentRoute: () => AppRoute,
 } as any)
 const AppTermReportRoute = AppTermReportRouteImport.update({
@@ -93,6 +106,11 @@ const AppStudentSummaryRoute = AppStudentSummaryRouteImport.update({
 const AppSeatingChartRoute = AppSeatingChartRouteImport.update({
   id: '/seating-chart',
   path: '/seating-chart',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSchoolAnalyticsRoute = AppSchoolAnalyticsRouteImport.update({
+  id: '/school-analytics',
+  path: '/school-analytics',
   getParentRoute: () => AppRoute,
 } as any)
 const AppResourcesRoute = AppResourcesRouteImport.update({
@@ -218,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/parent-portal': typeof AppParentPortalRoute
   '/question-bank': typeof AppQuestionBankRoute
   '/resources': typeof AppResourcesRoute
+  '/school-analytics': typeof AppSchoolAnalyticsRoute
   '/seating-chart': typeof AppSeatingChartRoute
   '/student-summary': typeof AppStudentSummaryRoute
   '/students': typeof AppStudentsRoute
@@ -226,6 +245,8 @@ export interface FileRoutesByFullPath {
   '/submissions': typeof AppSubmissionsRoute
   '/teachers': typeof AppTeachersRoute
   '/term-report': typeof AppTermReportRoute
+  '/timetable-management': typeof AppTimetableManagementRoute
+  '/timetables': typeof AppTimetablesRoute
   '/weekly-bundle': typeof AppWeeklyBundleRoute
 }
 export interface FileRoutesByTo {
@@ -250,6 +271,7 @@ export interface FileRoutesByTo {
   '/parent-portal': typeof AppParentPortalRoute
   '/question-bank': typeof AppQuestionBankRoute
   '/resources': typeof AppResourcesRoute
+  '/school-analytics': typeof AppSchoolAnalyticsRoute
   '/seating-chart': typeof AppSeatingChartRoute
   '/student-summary': typeof AppStudentSummaryRoute
   '/students': typeof AppStudentsRoute
@@ -258,6 +280,8 @@ export interface FileRoutesByTo {
   '/submissions': typeof AppSubmissionsRoute
   '/teachers': typeof AppTeachersRoute
   '/term-report': typeof AppTermReportRoute
+  '/timetable-management': typeof AppTimetableManagementRoute
+  '/timetables': typeof AppTimetablesRoute
   '/weekly-bundle': typeof AppWeeklyBundleRoute
 }
 export interface FileRoutesById {
@@ -284,6 +308,7 @@ export interface FileRoutesById {
   '/_app/parent-portal': typeof AppParentPortalRoute
   '/_app/question-bank': typeof AppQuestionBankRoute
   '/_app/resources': typeof AppResourcesRoute
+  '/_app/school-analytics': typeof AppSchoolAnalyticsRoute
   '/_app/seating-chart': typeof AppSeatingChartRoute
   '/_app/student-summary': typeof AppStudentSummaryRoute
   '/_app/students': typeof AppStudentsRoute
@@ -292,6 +317,8 @@ export interface FileRoutesById {
   '/_app/submissions': typeof AppSubmissionsRoute
   '/_app/teachers': typeof AppTeachersRoute
   '/_app/term-report': typeof AppTermReportRoute
+  '/_app/timetable-management': typeof AppTimetableManagementRoute
+  '/_app/timetables': typeof AppTimetablesRoute
   '/_app/weekly-bundle': typeof AppWeeklyBundleRoute
 }
 export interface FileRouteTypes {
@@ -318,6 +345,7 @@ export interface FileRouteTypes {
     | '/parent-portal'
     | '/question-bank'
     | '/resources'
+    | '/school-analytics'
     | '/seating-chart'
     | '/student-summary'
     | '/students'
@@ -326,6 +354,8 @@ export interface FileRouteTypes {
     | '/submissions'
     | '/teachers'
     | '/term-report'
+    | '/timetable-management'
+    | '/timetables'
     | '/weekly-bundle'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -350,6 +380,7 @@ export interface FileRouteTypes {
     | '/parent-portal'
     | '/question-bank'
     | '/resources'
+    | '/school-analytics'
     | '/seating-chart'
     | '/student-summary'
     | '/students'
@@ -358,6 +389,8 @@ export interface FileRouteTypes {
     | '/submissions'
     | '/teachers'
     | '/term-report'
+    | '/timetable-management'
+    | '/timetables'
     | '/weekly-bundle'
   id:
     | '__root__'
@@ -383,6 +416,7 @@ export interface FileRouteTypes {
     | '/_app/parent-portal'
     | '/_app/question-bank'
     | '/_app/resources'
+    | '/_app/school-analytics'
     | '/_app/seating-chart'
     | '/_app/student-summary'
     | '/_app/students'
@@ -391,6 +425,8 @@ export interface FileRouteTypes {
     | '/_app/submissions'
     | '/_app/teachers'
     | '/_app/term-report'
+    | '/_app/timetable-management'
+    | '/_app/timetables'
     | '/_app/weekly-bundle'
   fileRoutesById: FileRoutesById
 }
@@ -420,6 +456,20 @@ declare module '@tanstack/react-router' {
       path: '/weekly-bundle'
       fullPath: '/weekly-bundle'
       preLoaderRoute: typeof AppWeeklyBundleRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/timetables': {
+      id: '/_app/timetables'
+      path: '/timetables'
+      fullPath: '/timetables'
+      preLoaderRoute: typeof AppTimetablesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/timetable-management': {
+      id: '/_app/timetable-management'
+      path: '/timetable-management'
+      fullPath: '/timetable-management'
+      preLoaderRoute: typeof AppTimetableManagementRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/term-report': {
@@ -476,6 +526,13 @@ declare module '@tanstack/react-router' {
       path: '/seating-chart'
       fullPath: '/seating-chart'
       preLoaderRoute: typeof AppSeatingChartRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/school-analytics': {
+      id: '/_app/school-analytics'
+      path: '/school-analytics'
+      fullPath: '/school-analytics'
+      preLoaderRoute: typeof AppSchoolAnalyticsRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/resources': {
@@ -642,6 +699,7 @@ interface AppRouteChildren {
   AppParentPortalRoute: typeof AppParentPortalRoute
   AppQuestionBankRoute: typeof AppQuestionBankRoute
   AppResourcesRoute: typeof AppResourcesRoute
+  AppSchoolAnalyticsRoute: typeof AppSchoolAnalyticsRoute
   AppSeatingChartRoute: typeof AppSeatingChartRoute
   AppStudentSummaryRoute: typeof AppStudentSummaryRoute
   AppStudentsRoute: typeof AppStudentsRoute
@@ -650,6 +708,8 @@ interface AppRouteChildren {
   AppSubmissionsRoute: typeof AppSubmissionsRoute
   AppTeachersRoute: typeof AppTeachersRoute
   AppTermReportRoute: typeof AppTermReportRoute
+  AppTimetableManagementRoute: typeof AppTimetableManagementRoute
+  AppTimetablesRoute: typeof AppTimetablesRoute
   AppWeeklyBundleRoute: typeof AppWeeklyBundleRoute
 }
 
@@ -674,6 +734,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppParentPortalRoute: AppParentPortalRoute,
   AppQuestionBankRoute: AppQuestionBankRoute,
   AppResourcesRoute: AppResourcesRoute,
+  AppSchoolAnalyticsRoute: AppSchoolAnalyticsRoute,
   AppSeatingChartRoute: AppSeatingChartRoute,
   AppStudentSummaryRoute: AppStudentSummaryRoute,
   AppStudentsRoute: AppStudentsRoute,
@@ -682,6 +743,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppSubmissionsRoute: AppSubmissionsRoute,
   AppTeachersRoute: AppTeachersRoute,
   AppTermReportRoute: AppTermReportRoute,
+  AppTimetableManagementRoute: AppTimetableManagementRoute,
+  AppTimetablesRoute: AppTimetablesRoute,
   AppWeeklyBundleRoute: AppWeeklyBundleRoute,
 }
 
