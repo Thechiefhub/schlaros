@@ -117,7 +117,7 @@ function TimetablesPage() {
         icon={CalendarClock}
         title="Timetable Generator"
         description="Operations-research solver for class, test and exam timetables — colleges, institutions and K-12."
-        actions={
+        action={
           <div className="flex flex-wrap gap-2">
             <select
               className="input"
@@ -174,7 +174,7 @@ function TimetablesPage() {
       <div className="grid gap-4 md:grid-cols-2">
         <Section
           title={`Teachers (${teachers.length})`}
-          actions={
+          action={
             <button onClick={addTeacher} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
               <Plus className="h-3.5 w-3.5" /> Add
             </button>
@@ -218,7 +218,7 @@ function TimetablesPage() {
 
         <Section
           title={`Rooms (${rooms.length})`}
-          actions={
+          action={
             <button onClick={addRoom} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
               <Plus className="h-3.5 w-3.5" /> Add
             </button>
@@ -265,7 +265,7 @@ function TimetablesPage() {
 
       <Section
         title={`Courses (${courses.length})`}
-        actions={
+        action={
           <button onClick={addCourse} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
             <Plus className="h-3.5 w-3.5" /> Add course
           </button>
@@ -380,7 +380,7 @@ function TimetablesPage() {
       {result && (
         <Section
           title="Generated timetable"
-          actions={
+          action={
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Sparkles className="h-3.5 w-3.5 text-primary" />
               {result.stats.iterations} placements · {result.stats.ms}ms
