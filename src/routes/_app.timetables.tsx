@@ -24,6 +24,99 @@ function uid() {
   return Math.random().toString(36).slice(2, 9);
 }
 
+// ---------- Reusable templates ----------
+type Template = {
+  id: string;
+  label: string;
+  description: string;
+  mode: Mode;
+  days: string[];
+  periods: number;
+  apply: (current: { teachers: Teacher[]; rooms: Room[] }) => {
+    courses?: Course[];
+    rooms?: Room[];
+  };
+};
+
+const TEMPLATES: Template[] = [
+  {
+    id: "class-week",
+    label: "Standard class week",
+    description: "Mon–Fri · 8 periods · core NERDC subjects",
+    mode: "class",
+    days: DEFAULT_DAYS,
+    periods: 8,
+    apply: ({ teachers }) => ({
+      courses: [
+        { id: uid(), subject: "Mathematics", classGroup: "JSS1", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 5, heavy: true },
+        { id: uid(), subject: "English Studies", classGroup: "JSS1", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 4 },
+        { id: uid(), subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 3 },
+      ],
+    }),
+  },
+  {
+    id: "mid-term-test",
+    label: "Mid-term test week",
+    description: "3 days · 2-period tests per subject",
+    mode: "test",
+    days: ["Mon", "Tue", "Wed"],
+    periods: 6,
+    apply: ({ teachers }) => ({
+      courses: [
+        { id: uid(), subject: "Mathematics", classGroup: "JSS1", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2, heavy: true },
+        { id: uid(), subject: "English Studies", classGroup: "JSS1", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2 },
+        { id: uid(), subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2 },
+      ],
+    }),
+  },
+  {
+    id: "final-exam",
+    label: "Final exam timetable",
+    description: "5 days · 3-period exams in main hall",
+    mode: "exam",
+    days: DEFAULT_DAYS,
+    periods: 6,
+    apply: ({ teachers, rooms }) => ({
+      rooms: rooms.some((r) => r.type === "hall") ? rooms : [...rooms, { id: uid(), name: "Main Hall", type: "hall" }],
+      courses: [
+        { id: uid(), subject: "Mathematics", classGroup: "SS3", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3, heavy: true },
+        { id: uid(), subject: "English Studies", classGroup: "SS3", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        { id: uid(), subject: "Biology", classGroup: "SS3", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        { id: uid(), subject: "Chemistry", classGroup: "SS3", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        { id: uid(), subject: "Physics", classGroup: "SS3", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+      ],
+    }),
+  },
+];
+
+// ---------- CSV parsing ----------
+function parseCSV(text: string): Record<string, string>[] {
+  const lines = text.replace(/\r/g, "").split("\n").filter((l) => l.trim());
+  if (lines.length < 2) return [];
+  const splitRow = (row: string) => {
+    const out: string[] = [];
+    let cur = "";
+    let q = false;
+    for (let i = 0; i < row.length; i++) {
+      const ch = row[i];
+      if (ch === '"') {
+        if (q && row[i + 1] === '"') { cur += '"'; i++; }
+        else q = !q;
+      } else if (ch === "," && !q) { out.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out.map((c) => c.trim());
+  };
+  const headers = splitRow(lines[0]).map((h) => h.toLowerCase());
+  return lines.slice(1).map((row) => {
+    const cells = splitRow(row);
+    const rec: Record<string, string> = {};
+    headers.forEach((h, i) => (rec[h] = cells[i] ?? ""));
+    return rec;
+  });
+}
+
 function TimetablesPage() {
   const [mode, setMode] = usePersisted<Mode>("tg.tt.mode", "class");
   const [days, setDays] = usePersisted<string[]>("tg.tt.days", DEFAULT_DAYS);
