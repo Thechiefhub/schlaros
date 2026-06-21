@@ -78,7 +78,7 @@ function Landing() {
           </div>
           <div>
             <div className="text-gradient-primary font-display text-xl font-bold">SchlarOS</div>
-            <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Academic OS · Africa</div>
+            <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Modern Education OS</div>
           </div>
         </div>
         <div className="hidden items-center gap-8 md:flex">
