@@ -80,6 +80,7 @@ export const SECTIONS: MenuSection[] = [
       { to: "/lesson-notes", label: "Lesson Notes", icon: FileText },
       { to: "/assessments", label: "Assessments", icon: ClipboardList },
       { to: "/question-bank", label: "Question Bank", icon: Database },
+      { to: "/curriculum", label: "NERDC Curriculum", icon: BookMarked },
     ],
   },
   {
