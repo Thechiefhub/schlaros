@@ -385,9 +385,36 @@ function TimetablesPage() {
         <Section
           title={`Rooms (${rooms.length})`}
           action={
-            <button onClick={addRoom} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-              <Plus className="h-3.5 w-3.5" /> Add
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => roomsFileRef.current?.click()}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary"
+                title="CSV columns: name, type (classroom|lab|hall)"
+              >
+                <Upload className="h-3.5 w-3.5" /> CSV
+              </button>
+              <input
+                ref={roomsFileRef}
+                type="file"
+                accept=".csv,text/csv"
+                className="hidden"
+                onChange={(e) => {
+                  importCSV(
+                    e.target.files?.[0],
+                    (row) => {
+                      if (!row.name) return null;
+                      const type = (["classroom", "lab", "hall"].includes(row.type) ? row.type : "classroom") as Room["type"];
+                      return { id: uid(), name: row.name, type };
+                    },
+                    (items) => setRooms([...rooms, ...items]),
+                  );
+                  e.target.value = "";
+                }}
+              />
+              <button onClick={addRoom} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                <Plus className="h-3.5 w-3.5" /> Add
+              </button>
+            </div>
           }
         >
           <div className="space-y-2">
@@ -432,9 +459,46 @@ function TimetablesPage() {
       <Section
         title={`Courses (${courses.length})`}
         action={
-          <button onClick={addCourse} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-            <Plus className="h-3.5 w-3.5" /> Add course
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => coursesFileRef.current?.click()}
+              className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary"
+              title="CSV columns: subject, classGroup, teacher, periodsPerWeek, durationPeriods, heavy"
+            >
+              <Upload className="h-3.5 w-3.5" /> CSV
+            </button>
+            <input
+              ref={coursesFileRef}
+              type="file"
+              accept=".csv,text/csv"
+              className="hidden"
+              onChange={(e) => {
+                importCSV(
+                  e.target.files?.[0],
+                  (row) => {
+                    if (!row.subject || !row.classgroup) return null;
+                    const teacher = teachers.find(
+                      (t) => t.name.toLowerCase() === (row.teacher ?? "").toLowerCase(),
+                    );
+                    return {
+                      id: uid(),
+                      subject: row.subject,
+                      classGroup: row.classgroup,
+                      teacherId: teacher?.id ?? teachers[0]?.id ?? "",
+                      periodsPerWeek: Number(row.periodsperweek) || 1,
+                      durationPeriods: Number(row.durationperiods) || undefined,
+                      heavy: /^(1|true|yes)$/i.test(row.heavy ?? ""),
+                    } as Course;
+                  },
+                  (items) => setCourses([...courses, ...items]),
+                );
+                e.target.value = "";
+              }}
+            />
+            <button onClick={addCourse} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+              <Plus className="h-3.5 w-3.5" /> Add course
+            </button>
+          </div>
         }
       >
         <div className="overflow-x-auto">
