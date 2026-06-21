@@ -80,6 +80,7 @@ export const SECTIONS: MenuSection[] = [
       { to: "/lesson-notes", label: "Lesson Notes", icon: FileText },
       { to: "/assessments", label: "Assessments", icon: ClipboardList },
       { to: "/question-bank", label: "Question Bank", icon: Database },
+      { to: "/curriculum", label: "NERDC Curriculum", icon: BookMarked },
     ],
   },
   {
@@ -164,8 +165,8 @@ export const SECTIONS: MenuSection[] = [
 export const MENU: MenuItem[] = SECTIONS.flatMap((s) => s.items).filter((i) => i.to);
 
 export const APP_BRAND = {
-  name: "TeacherGPT",
-  tagline: "AI School OS",
+  name: "SchlarOS",
+  tagline: "Modern Education OS",
   icon: GraduationCap,
 };
 

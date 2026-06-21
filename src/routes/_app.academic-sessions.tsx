@@ -5,7 +5,7 @@ import { CrudPage } from "@/components/crud-page";
 type Session = { id: string; name: string; startDate: string; endDate: string; status: string };
 
 export const Route = createFileRoute("/_app/academic-sessions")({
-  head: () => ({ meta: [{ title: "Academic Sessions — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Academic Sessions — SchlarOS" }] }),
   component: () => (
     <CrudPage<Session>
       storageKey="tg.sessions"

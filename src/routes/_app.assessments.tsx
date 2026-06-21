@@ -15,7 +15,7 @@ import {
 import { useEffect } from "react";
 
 export const Route = createFileRoute("/_app/assessments")({
-  head: () => ({ meta: [{ title: "Assessments — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Assessments — SchlarOS" }] }),
   component: AssessmentsPage,
 });
 

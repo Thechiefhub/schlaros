@@ -5,7 +5,7 @@ import { getAssessments, getSubmissions } from "@/lib/store";
 import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/_app/school-analytics")({
-  head: () => ({ meta: [{ title: "School Analytics — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "School Analytics — SchlarOS" }] }),
   component: SchoolAnalytics,
 });
 

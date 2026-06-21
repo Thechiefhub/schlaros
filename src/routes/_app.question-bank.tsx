@@ -7,7 +7,7 @@ import { usePersisted } from "@/hooks/use-persisted";
 import { generateAI } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/_app/question-bank")({
-  head: () => ({ meta: [{ title: "Question Bank — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Question Bank — SchlarOS" }] }),
   component: QuestionBank,
 });
 

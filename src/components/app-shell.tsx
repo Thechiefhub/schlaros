@@ -373,7 +373,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           })}
         </div>
         <div className="mt-2 text-center text-[9px] text-white/30">
-          © 2026 TeacherGPT — by Chief Tolulope
+          © 2026 SchlarOS — by Chief Tolulope
         </div>
       </div>
     </div>
@@ -428,7 +428,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <Menu className="h-4 w-4" />
             </button>
             <nav className="flex min-w-0 items-center gap-1.5 text-xs">
-              <span className="text-muted-foreground">TeacherGPT</span>
+              <span className="text-muted-foreground">SchlarOS</span>
               {section && (
                 <>
                   <ChevronRight className="h-3 w-3 text-muted-foreground" />

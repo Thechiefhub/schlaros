@@ -6,7 +6,7 @@ import { CLASSES, SUBJECTS } from "@/lib/sample-data";
 import { usePersisted } from "@/hooks/use-persisted";
 
 export const Route = createFileRoute("/_app/online-meetings")({
-  head: () => ({ meta: [{ title: "Online Meetings — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Online Meetings — SchlarOS" }] }),
   component: Meetings,
 });
 
