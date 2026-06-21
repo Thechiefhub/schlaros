@@ -191,7 +191,7 @@ function Landing() {
                 <div className="h-3 w-3 rounded-full bg-red-400" />
                 <div className="h-3 w-3 rounded-full bg-amber-400" />
                 <div className="h-3 w-3 rounded-full bg-emerald-400" />
-                <div className="ml-3 text-xs text-white/40">teachergpt.app/lesson-notes</div>
+                <div className="ml-3 text-xs text-white/40">schlaros.app/lesson-notes</div>
               </div>
               <div className="grid grid-cols-3 gap-3">
                 {[
