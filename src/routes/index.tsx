@@ -123,8 +123,8 @@ function Landing() {
           transition={{ delay: 0.1 }}
           className="font-display text-5xl leading-[1.02] font-bold md:text-7xl"
         >
-          The Academic OS.<br />
-          <span className="text-gradient-primary">Built for Africa.</span>
+          The Operating System for<br />
+          <span className="text-gradient-primary">Modern Education.</span>
         </motion.h1>
 
         <motion.p
@@ -133,7 +133,7 @@ function Landing() {
           transition={{ delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
         >
-          <span className="font-semibold text-foreground">An AI-powered Academic Operating System for Africa.</span> SchlarOS unifies lesson planning, grading, attendance, analytics, and parent communication — so schools run smarter and teachers teach freer.
+          <span className="font-semibold text-foreground">SchlarOS — The Operating System for Modern Education.</span> One unified platform for lesson planning, grading, attendance, analytics, timetables and parent communication — aligned with the new NERDC curriculum.
         </motion.p>
 
         <motion.div
