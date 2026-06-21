@@ -194,6 +194,31 @@ function TimetablesPage() {
     URL.revokeObjectURL(url);
   }
 
+  function applyTemplate(t: Template) {
+    setMode(t.mode);
+    setDays(t.days);
+    setPeriods(t.periods);
+    const out = t.apply({ teachers, rooms });
+    if (out.rooms) setRooms(out.rooms);
+    if (out.courses) setCourses([...courses, ...out.courses]);
+  }
+
+  async function importCSV<T>(
+    file: File | null | undefined,
+    mapper: (row: Record<string, string>) => T | null,
+    onResult: (items: T[]) => void,
+  ) {
+    if (!file) return;
+    const text = await file.text();
+    const rows = parseCSV(text);
+    const mapped = rows.map(mapper).filter((x): x is T => x !== null);
+    if (mapped.length) onResult(mapped);
+  }
+
+  const teachersFileRef = useRef<HTMLInputElement>(null);
+  const roomsFileRef = useRef<HTMLInputElement>(null);
+  const coursesFileRef = useRef<HTMLInputElement>(null);
+
   const classGroups = useMemo(
     () => Array.from(new Set(courses.map((c) => c.classGroup))).sort(),
     [courses],
