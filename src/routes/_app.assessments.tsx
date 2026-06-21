@@ -1,17 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ClipboardList, Sparkles, Loader2, Download } from "lucide-react";
+import { ClipboardList, Sparkles, Loader2, Download, Share2, Copy, Check, ExternalLink, Trash2 } from "lucide-react";
 import { PageHeader, Section } from "@/components/page-header";
 import { CLASSES, SUBJECTS } from "@/lib/sample-data";
 import { generateAI } from "@/lib/ai.functions";
-import { usePersisted } from "@/hooks/use-persisted";
+import {
+  getAssessments,
+  saveAssessments,
+  shareUrl,
+  uniqueSlug,
+  type Assessment,
+  type Question,
+} from "@/lib/store";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/_app/assessments")({
   head: () => ({ meta: [{ title: "Assessments — TeacherGPT" }] }),
   component: AssessmentsPage,
 });
-
-type Question = { q: string; options?: string[]; answer: string; explanation?: string };
 
 function AssessmentsPage() {
   const [mode, setMode] = useState<"single" | "multi">("single");
@@ -25,8 +31,13 @@ function AssessmentsPage() {
   const [time, setTime] = useState(30);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
-  const [saved, setSaved] = usePersisted<{ title: string; questions: Question[]; createdAt: string }[]>("tg.assessments", []);
+  const [saved, setSaved] = useState<Assessment[]>([]);
   const [current, setCurrent] = useState<Question[] | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSaved(getAssessments());
+  }, []);
 
   async function generate() {
     setErr("");
@@ -34,7 +45,7 @@ function AssessmentsPage() {
     setCurrent(null);
     try {
       const sys = "You are an expert curriculum designer. Return strictly valid JSON.";
-      const prompt = `Create ${count} ${difficulty.toLowerCase()} ${qType} questions for ${klass} ${subject} on the topic "${topic}". Return JSON of shape: {"questions":[{"q":"...","options":["A","B","C","D"],"answer":"A","explanation":"..."}]}. For non-multiple-choice, omit options. Keep explanations short.`;
+      const prompt = `Create ${count} ${difficulty.toLowerCase()} ${qType} questions for ${klass} ${subject} on the topic "${topic}". Return JSON of shape: {"questions":[{"q":"...","options":["A","B","C","D"],"answer":"A","explanation":"..."}]}. For non-multiple-choice, omit "options" entirely. Keep explanations short.`;
       const res = await generateAI({ data: { system: sys, prompt, json: true } });
       const obj = JSON.parse(res.json) as { questions: Question[] };
       setCurrent(obj.questions ?? []);
@@ -47,10 +58,31 @@ function AssessmentsPage() {
 
   function save() {
     if (!current) return;
-    setSaved([{ title: title || `${subject} - ${topic}`, questions: current, createdAt: new Date().toISOString() }, ...saved]);
+    const t = title || `${subject} · ${topic}`;
+    const a: Assessment = {
+      id: crypto.randomUUID(),
+      slug: uniqueSlug(t),
+      title: t,
+      subject,
+      klass,
+      topic,
+      type: qType,
+      duration: time,
+      questions: current,
+      createdAt: new Date().toISOString(),
+    };
+    const next = [a, ...saved];
+    setSaved(next);
+    saveAssessments(next);
     setCurrent(null);
     setTitle("");
     setTopic("");
+  }
+
+  function remove(id: string) {
+    const next = saved.filter((a) => a.id !== id);
+    setSaved(next);
+    saveAssessments(next);
   }
 
   function exportJSON() {
@@ -64,9 +96,15 @@ function AssessmentsPage() {
     URL.revokeObjectURL(url);
   }
 
+  async function copyLink(a: Assessment) {
+    await navigator.clipboard.writeText(shareUrl(`/q/${a.slug}`));
+    setCopiedId(a.id);
+    setTimeout(() => setCopiedId(null), 1500);
+  }
+
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <PageHeader icon={ClipboardList} title="Create Assessment" description="AI-generated quizzes, tests, and exams." />
+      <PageHeader icon={ClipboardList} title="Create Assessment" description="AI-generated quizzes — share a link, auto-grade MCQs, collect theory submissions." />
 
       <Section
         title="Assessment Setup"
@@ -110,7 +148,9 @@ function AssessmentsPage() {
           </button>
           {current && (
             <>
-              <button onClick={save} className="rounded-xl bg-mint px-5 py-2.5 text-sm font-semibold text-white">Save</button>
+              <button onClick={save} className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600">
+                Save &amp; create share link
+              </button>
               <button onClick={exportJSON} className="inline-flex items-center gap-2 rounded-xl border border-white/40 bg-white/60 px-4 py-2.5 text-sm font-semibold"><Download className="h-4 w-4" /> Export</button>
             </>
           )}
@@ -127,11 +167,11 @@ function AssessmentsPage() {
                 {q.options && (
                   <ul className="mt-2 grid gap-1.5 text-sm md:grid-cols-2">
                     {q.options.map((o, idx) => (
-                      <li key={idx} className={`rounded-lg border px-3 py-1.5 ${o === q.answer ? "border-mint bg-mint/10 font-semibold" : "border-white/40"}`}>{o}</li>
+                      <li key={idx} className={`rounded-lg border px-3 py-1.5 ${o === q.answer ? "border-emerald-400 bg-emerald-50 font-semibold" : "border-white/40"}`}>{o}</li>
                     ))}
                   </ul>
                 )}
-                {!q.options && <p className="mt-2 text-sm text-mint-foreground/80"><span className="font-semibold">Answer:</span> {q.answer}</p>}
+                {!q.options && <p className="mt-2 text-sm text-muted-foreground"><span className="font-semibold">Answer:</span> {q.answer}</p>}
                 {q.explanation && <p className="mt-2 text-xs text-muted-foreground">💡 {q.explanation}</p>}
               </li>
             ))}
@@ -141,14 +181,53 @@ function AssessmentsPage() {
 
       {saved.length > 0 && (
         <Section title={`Saved Assessments (${saved.length})`}>
-          <ul className="divide-y divide-white/30">
-            {saved.map((a, i) => (
-              <li key={i} className="flex items-center justify-between py-2 text-sm">
-                <div><div className="font-medium">{a.title}</div><div className="text-xs text-muted-foreground">{new Date(a.createdAt).toLocaleString()} • {a.questions.length} questions</div></div>
-                <button onClick={() => setSaved(saved.filter((_, j) => j !== i))} className="text-xs text-destructive">Delete</button>
-              </li>
-            ))}
+          <ul className="space-y-3">
+            {saved.map((a) => {
+              const link = shareUrl(`/q/${a.slug}`);
+              return (
+                <li key={a.id} className="rounded-2xl border border-white/40 bg-white/60 p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="font-semibold">{a.title}</div>
+                      <div className="text-xs text-muted-foreground">
+                        {a.subject} · {a.klass} · {a.questions.length} questions · {a.duration}m · {new Date(a.createdAt).toLocaleDateString()}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <a
+                        href={`/q/${a.slug}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 rounded-lg bg-white/80 px-3 py-1.5 text-xs font-semibold"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" /> Open
+                      </a>
+                      <button
+                        onClick={() => copyLink(a)}
+                        className="inline-flex items-center gap-1 rounded-lg bg-gradient-primary px-3 py-1.5 text-xs font-semibold text-white"
+                      >
+                        {copiedId === a.id ? <Check className="h-3.5 w-3.5" /> : <Share2 className="h-3.5 w-3.5" />}
+                        {copiedId === a.id ? "Copied!" : "Share link"}
+                      </button>
+                      <button
+                        onClick={() => remove(a.id)}
+                        className="rounded-lg bg-destructive/10 p-1.5 text-destructive"
+                        aria-label="Delete"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-2 truncate rounded-lg bg-slate-900/5 px-3 py-1.5 font-mono text-[11px] text-primary">
+                    {link}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
+          <p className="mt-3 text-xs text-muted-foreground">
+            Tip: visit <Link to="/submissions" className="font-semibold text-primary">Submissions</Link> to grade theory answers and review MCQ results.
+          </p>
         </Section>
       )}
     </div>

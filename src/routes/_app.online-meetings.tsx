@@ -26,7 +26,12 @@ function Meetings() {
     setF({ title: "", agenda: "", klass: CLASSES[0], subject: SUBJECTS[0], mode: "video", scheduledAt: "" });
   }
 
-  function link(m: Meeting) { return `${typeof window !== "undefined" ? window.location.origin : ""}/meet/${m.slug}`; }
+  function link(m: Meeting) {
+    if (typeof window === "undefined") return `/m/${m.slug}`;
+    const o = window.location.origin;
+    const clean = /id-preview|sandbox\.lovable\.dev|--/.test(o) ? "https://schlaros.lovable.app" : o;
+    return `${clean}/m/${m.slug}`;
+  }
 
   return (
     <div className="mx-auto max-w-5xl space-y-6">
@@ -65,6 +70,7 @@ function Meetings() {
                   <div className="mt-1 text-xs text-primary">{link(m)}</div>
                 </div>
                 <div className="flex gap-2">
+                  <a href={`/m/${m.slug}`} target="_blank" rel="noreferrer" className="bg-gradient-primary inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-semibold text-white">Start</a>
                   <button onClick={() => navigator.clipboard.writeText(link(m))} className="inline-flex items-center gap-1 rounded-lg bg-white/70 px-3 py-1.5 text-xs font-semibold"><Copy className="h-3.5 w-3.5" /> Copy</button>
                   <button onClick={() => setMeetings(meetings.filter((x) => x.id !== m.id))} className="rounded-lg bg-destructive/10 p-1.5 text-destructive"><Trash2 className="h-4 w-4" /></button>
                 </div>
