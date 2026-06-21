@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CalendarClock, Cpu, Plus, Trash2, Sparkles, AlertTriangle, Download } from "lucide-react";
-import { useMemo, useState } from "react";
+import { CalendarClock, Cpu, Plus, Trash2, Sparkles, AlertTriangle, Download, Upload, LayoutTemplate } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 import { PageHeader, Section } from "@/components/page-header";
 import { usePersisted } from "@/hooks/use-persisted";
 import {
@@ -22,6 +22,99 @@ const DEFAULT_DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
 function uid() {
   return Math.random().toString(36).slice(2, 9);
+}
+
+// ---------- Reusable templates ----------
+type Template = {
+  id: string;
+  label: string;
+  description: string;
+  mode: Mode;
+  days: string[];
+  periods: number;
+  apply: (current: { teachers: Teacher[]; rooms: Room[] }) => {
+    courses?: Course[];
+    rooms?: Room[];
+  };
+};
+
+const TEMPLATES: Template[] = [
+  {
+    id: "class-week",
+    label: "Standard class week",
+    description: "Mon–Fri · 8 periods · core NERDC subjects",
+    mode: "class",
+    days: DEFAULT_DAYS,
+    periods: 8,
+    apply: ({ teachers }) => ({
+      courses: [
+        { id: uid(), subject: "Mathematics", classGroup: "JSS1", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 5, heavy: true },
+        { id: uid(), subject: "English Studies", classGroup: "JSS1", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 4 },
+        { id: uid(), subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 3 },
+      ],
+    }),
+  },
+  {
+    id: "mid-term-test",
+    label: "Mid-term test week",
+    description: "3 days · 2-period tests per subject",
+    mode: "test",
+    days: ["Mon", "Tue", "Wed"],
+    periods: 6,
+    apply: ({ teachers }) => ({
+      courses: [
+        { id: uid(), subject: "Mathematics", classGroup: "JSS1", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2, heavy: true },
+        { id: uid(), subject: "English Studies", classGroup: "JSS1", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2 },
+        { id: uid(), subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2 },
+      ],
+    }),
+  },
+  {
+    id: "final-exam",
+    label: "Final exam timetable",
+    description: "5 days · 3-period exams in main hall",
+    mode: "exam",
+    days: DEFAULT_DAYS,
+    periods: 6,
+    apply: ({ teachers, rooms }) => ({
+      rooms: rooms.some((r) => r.type === "hall") ? rooms : [...rooms, { id: uid(), name: "Main Hall", type: "hall" }],
+      courses: [
+        { id: uid(), subject: "Mathematics", classGroup: "SS3", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3, heavy: true },
+        { id: uid(), subject: "English Studies", classGroup: "SS3", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        { id: uid(), subject: "Biology", classGroup: "SS3", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        { id: uid(), subject: "Chemistry", classGroup: "SS3", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        { id: uid(), subject: "Physics", classGroup: "SS3", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+      ],
+    }),
+  },
+];
+
+// ---------- CSV parsing ----------
+function parseCSV(text: string): Record<string, string>[] {
+  const lines = text.replace(/\r/g, "").split("\n").filter((l) => l.trim());
+  if (lines.length < 2) return [];
+  const splitRow = (row: string) => {
+    const out: string[] = [];
+    let cur = "";
+    let q = false;
+    for (let i = 0; i < row.length; i++) {
+      const ch = row[i];
+      if (ch === '"') {
+        if (q && row[i + 1] === '"') { cur += '"'; i++; }
+        else q = !q;
+      } else if (ch === "," && !q) { out.push(cur); cur = ""; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out.map((c) => c.trim());
+  };
+  const headers = splitRow(lines[0]).map((h) => h.toLowerCase());
+  return lines.slice(1).map((row) => {
+    const cells = splitRow(row);
+    const rec: Record<string, string> = {};
+    headers.forEach((h, i) => (rec[h] = cells[i] ?? ""));
+    return rec;
+  });
 }
 
 function TimetablesPage() {
@@ -101,6 +194,31 @@ function TimetablesPage() {
     URL.revokeObjectURL(url);
   }
 
+  function applyTemplate(t: Template) {
+    setMode(t.mode);
+    setDays(t.days);
+    setPeriods(t.periods);
+    const out = t.apply({ teachers, rooms });
+    if (out.rooms) setRooms(out.rooms);
+    if (out.courses) setCourses([...courses, ...out.courses]);
+  }
+
+  async function importCSV<T>(
+    file: File | null | undefined,
+    mapper: (row: Record<string, string>) => T | null,
+    onResult: (items: T[]) => void,
+  ) {
+    if (!file) return;
+    const text = await file.text();
+    const rows = parseCSV(text);
+    const mapped = rows.map(mapper).filter((x): x is T => x !== null);
+    if (mapped.length) onResult(mapped);
+  }
+
+  const teachersFileRef = useRef<HTMLInputElement>(null);
+  const roomsFileRef = useRef<HTMLInputElement>(null);
+  const coursesFileRef = useRef<HTMLInputElement>(null);
+
   const classGroups = useMemo(
     () => Array.from(new Set(courses.map((c) => c.classGroup))).sort(),
     [courses],
@@ -171,13 +289,61 @@ function TimetablesPage() {
         </div>
       </Section>
 
+      <Section
+        title="Reusable templates"
+        action={<span className="text-xs text-muted-foreground">Prefill the planner with one click</span>}
+      >
+        <div className="grid gap-3 sm:grid-cols-3">
+          {TEMPLATES.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => applyTemplate(t)}
+              className="group flex flex-col items-start gap-1 rounded-2xl border border-border bg-white/70 p-4 text-left transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
+            >
+              <div className="bg-gradient-primary inline-flex h-9 w-9 items-center justify-center rounded-xl text-white">
+                <LayoutTemplate className="h-4 w-4" />
+              </div>
+              <div className="mt-2 text-sm font-semibold">{t.label}</div>
+              <div className="text-xs text-muted-foreground">{t.description}</div>
+              <div className="mt-1 text-[10px] font-bold uppercase tracking-wide text-primary">
+                {t.mode} · {t.days.length}d × {t.periods}p
+              </div>
+            </button>
+          ))}
+        </div>
+      </Section>
+
       <div className="grid gap-4 md:grid-cols-2">
         <Section
           title={`Teachers (${teachers.length})`}
           action={
-            <button onClick={addTeacher} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-              <Plus className="h-3.5 w-3.5" /> Add
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => teachersFileRef.current?.click()}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary"
+                title="CSV columns: name, maxPerDay"
+              >
+                <Upload className="h-3.5 w-3.5" /> CSV
+              </button>
+              <input
+                ref={teachersFileRef}
+                type="file"
+                accept=".csv,text/csv"
+                className="hidden"
+                onChange={(e) => {
+                  importCSV(
+                    e.target.files?.[0],
+                    (row) => row.name ? { id: uid(), name: row.name, maxPerDay: Number(row.maxperday) || undefined } : null,
+                    (items) => setTeachers([...teachers, ...items]),
+                  );
+                  e.target.value = "";
+                }}
+              />
+              <button onClick={addTeacher} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                <Plus className="h-3.5 w-3.5" /> Add
+              </button>
+            </div>
           }
         >
           <div className="space-y-2">
@@ -219,9 +385,36 @@ function TimetablesPage() {
         <Section
           title={`Rooms (${rooms.length})`}
           action={
-            <button onClick={addRoom} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-              <Plus className="h-3.5 w-3.5" /> Add
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => roomsFileRef.current?.click()}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary"
+                title="CSV columns: name, type (classroom|lab|hall)"
+              >
+                <Upload className="h-3.5 w-3.5" /> CSV
+              </button>
+              <input
+                ref={roomsFileRef}
+                type="file"
+                accept=".csv,text/csv"
+                className="hidden"
+                onChange={(e) => {
+                  importCSV(
+                    e.target.files?.[0],
+                    (row) => {
+                      if (!row.name) return null;
+                      const type = (["classroom", "lab", "hall"].includes(row.type) ? row.type : "classroom") as Room["type"];
+                      return { id: uid(), name: row.name, type };
+                    },
+                    (items) => setRooms([...rooms, ...items]),
+                  );
+                  e.target.value = "";
+                }}
+              />
+              <button onClick={addRoom} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                <Plus className="h-3.5 w-3.5" /> Add
+              </button>
+            </div>
           }
         >
           <div className="space-y-2">
@@ -266,9 +459,46 @@ function TimetablesPage() {
       <Section
         title={`Courses (${courses.length})`}
         action={
-          <button onClick={addCourse} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-            <Plus className="h-3.5 w-3.5" /> Add course
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => coursesFileRef.current?.click()}
+              className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary"
+              title="CSV columns: subject, classGroup, teacher, periodsPerWeek, durationPeriods, heavy"
+            >
+              <Upload className="h-3.5 w-3.5" /> CSV
+            </button>
+            <input
+              ref={coursesFileRef}
+              type="file"
+              accept=".csv,text/csv"
+              className="hidden"
+              onChange={(e) => {
+                importCSV(
+                  e.target.files?.[0],
+                  (row) => {
+                    if (!row.subject || !row.classgroup) return null;
+                    const teacher = teachers.find(
+                      (t) => t.name.toLowerCase() === (row.teacher ?? "").toLowerCase(),
+                    );
+                    return {
+                      id: uid(),
+                      subject: row.subject,
+                      classGroup: row.classgroup,
+                      teacherId: teacher?.id ?? teachers[0]?.id ?? "",
+                      periodsPerWeek: Number(row.periodsperweek) || 1,
+                      durationPeriods: Number(row.durationperiods) || undefined,
+                      heavy: /^(1|true|yes)$/i.test(row.heavy ?? ""),
+                    } as Course;
+                  },
+                  (items) => setCourses([...courses, ...items]),
+                );
+                e.target.value = "";
+              }}
+            />
+            <button onClick={addCourse} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+              <Plus className="h-3.5 w-3.5" /> Add course
+            </button>
+          </div>
         }
       >
         <div className="overflow-x-auto">

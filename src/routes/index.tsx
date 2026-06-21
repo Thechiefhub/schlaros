@@ -323,8 +323,11 @@ function Landing() {
             <Heart className="h-3.5 w-3.5 fill-electric-pink text-electric-pink" /> Teacher love
           </div>
           <h2 className="font-display mt-4 text-4xl font-bold md:text-5xl">
-            Real teachers. <span className="text-gradient-primary">Real Sundays back.</span>
+            Less paperwork. <span className="text-gradient-primary">More teaching.</span>
           </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
+            Built for the real pains of the classroom — endless lesson notes, score sheets, attendance and reports.
+          </p>
         </motion.div>
 
         <div className="grid gap-5 md:grid-cols-3">
