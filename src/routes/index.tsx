@@ -10,10 +10,10 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SchlarOS — AI-powered Academic Operating System for Africa" },
-      { name: "description", content: "An AI-powered Academic Operating System for Africa. Plan lessons, grade assessments, and track every student — built for African schools." },
-      { property: "og:title", content: "SchlarOS — AI Academic OS for Africa" },
-      { property: "og:description", content: "An AI-powered Academic Operating System for Africa. Built for teachers, schools, parents and students." },
+      { title: "SchlarOS — The Operating System for Modern Education" },
+      { name: "description", content: "SchlarOS is the operating system for modern education. Lesson planning, grading, attendance, analytics and timetables — aligned with the new NERDC curriculum." },
+      { property: "og:title", content: "SchlarOS — The Operating System for Modern Education" },
+      { property: "og:description", content: "Lesson planning, grading, attendance, analytics and timetables — aligned with the new NERDC curriculum." },
       { property: "og:type", content: "website" },
     ],
   }),
