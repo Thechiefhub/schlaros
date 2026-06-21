@@ -117,7 +117,7 @@ function TimetablesPage() {
         icon={CalendarClock}
         title="Timetable Generator"
         description="Operations-research solver for class, test and exam timetables — colleges, institutions and K-12."
-        action={
+        actions={
           <div className="flex flex-wrap gap-2">
             <select
               className="input"
