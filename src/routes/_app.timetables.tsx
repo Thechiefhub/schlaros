@@ -289,13 +289,61 @@ function TimetablesPage() {
         </div>
       </Section>
 
+      <Section
+        title="Reusable templates"
+        action={<span className="text-xs text-muted-foreground">Prefill the planner with one click</span>}
+      >
+        <div className="grid gap-3 sm:grid-cols-3">
+          {TEMPLATES.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => applyTemplate(t)}
+              className="group flex flex-col items-start gap-1 rounded-2xl border border-border bg-white/70 p-4 text-left transition-all hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
+            >
+              <div className="bg-gradient-primary inline-flex h-9 w-9 items-center justify-center rounded-xl text-white">
+                <LayoutTemplate className="h-4 w-4" />
+              </div>
+              <div className="mt-2 text-sm font-semibold">{t.label}</div>
+              <div className="text-xs text-muted-foreground">{t.description}</div>
+              <div className="mt-1 text-[10px] font-bold uppercase tracking-wide text-primary">
+                {t.mode} · {t.days.length}d × {t.periods}p
+              </div>
+            </button>
+          ))}
+        </div>
+      </Section>
+
       <div className="grid gap-4 md:grid-cols-2">
         <Section
           title={`Teachers (${teachers.length})`}
           action={
-            <button onClick={addTeacher} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-              <Plus className="h-3.5 w-3.5" /> Add
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => teachersFileRef.current?.click()}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary"
+                title="CSV columns: name, maxPerDay"
+              >
+                <Upload className="h-3.5 w-3.5" /> CSV
+              </button>
+              <input
+                ref={teachersFileRef}
+                type="file"
+                accept=".csv,text/csv"
+                className="hidden"
+                onChange={(e) => {
+                  importCSV(
+                    e.target.files?.[0],
+                    (row) => row.name ? { id: uid(), name: row.name, maxPerDay: Number(row.maxperday) || undefined } : null,
+                    (items) => setTeachers([...teachers, ...items]),
+                  );
+                  e.target.value = "";
+                }}
+              />
+              <button onClick={addTeacher} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                <Plus className="h-3.5 w-3.5" /> Add
+              </button>
+            </div>
           }
         >
           <div className="space-y-2">
