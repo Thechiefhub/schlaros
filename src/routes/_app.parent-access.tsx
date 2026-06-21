@@ -6,7 +6,7 @@ import { CLASSES, studentsFor } from "@/lib/sample-data";
 import { usePersisted } from "@/hooks/use-persisted";
 
 export const Route = createFileRoute("/_app/parent-access")({
-  head: () => ({ meta: [{ title: "Parent Access — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Parent Access — SchlarOS" }] }),
   component: ParentAccess,
 });
 

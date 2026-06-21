@@ -7,7 +7,7 @@ import { usePersisted } from "@/hooks/use-persisted";
 import { generateAI } from "@/lib/ai.functions";
 
 export const Route = createFileRoute("/_app/bulk-grading")({
-  head: () => ({ meta: [{ title: "Bulk Grading — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Bulk Grading — SchlarOS" }] }),
   component: BulkGrading,
 });
 

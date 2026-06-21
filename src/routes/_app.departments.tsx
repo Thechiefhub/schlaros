@@ -5,7 +5,7 @@ import { CrudPage } from "@/components/crud-page";
 type Dept = { id: string; name: string; head: string; description?: string };
 
 export const Route = createFileRoute("/_app/departments")({
-  head: () => ({ meta: [{ title: "Departments — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Departments — SchlarOS" }] }),
   component: () => (
     <CrudPage<Dept>
       storageKey="tg.departments"

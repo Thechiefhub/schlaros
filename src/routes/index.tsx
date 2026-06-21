@@ -10,9 +10,9 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TeacherGPT — AI-powered Academic Operating System for Africa" },
+      { title: "SchlarOS — AI-powered Academic Operating System for Africa" },
       { name: "description", content: "An AI-powered Academic Operating System for Africa. Plan lessons, grade assessments, and track every student — built for African schools." },
-      { property: "og:title", content: "TeacherGPT — AI Academic OS for Africa" },
+      { property: "og:title", content: "SchlarOS — AI Academic OS for Africa" },
       { property: "og:description", content: "An AI-powered Academic Operating System for Africa. Built for teachers, schools, parents and students." },
       { property: "og:type", content: "website" },
     ],
@@ -38,21 +38,21 @@ const FEATURES = [
 
 const STEPS = [
   { n: "01", title: "Sign up in 30 seconds", desc: "No credit card. No setup tax. Open the app and start." },
-  { n: "02", title: "Tell us your subjects & classes", desc: "We tune TeacherGPT to your curriculum, your tone, your style." },
+  { n: "02", title: "Tell us your subjects & classes", desc: "We tune SchlarOS to your curriculum, your tone, your style." },
   { n: "03", title: "Generate, teach, repeat", desc: "Lesson notes, quizzes, reports — all one click away. Forever." },
 ];
 
 const TESTIMONIALS = [
-  { name: "Mrs. Adeyemi", role: "Biology, SS2", quote: "I got my Sundays back. That alone makes TeacherGPT priceless. The lesson notes are gold.", color: "bg-purple-500" },
+  { name: "Mrs. Adeyemi", role: "Biology, SS2", quote: "I got my Sundays back. That alone makes SchlarOS priceless. The lesson notes are gold.", color: "bg-purple-500" },
   { name: "Mr. Okafor", role: "Mathematics, JSS3", quote: "Bulk grading used to take my whole weekend. Now it takes one cup of coffee. Wild.", color: "bg-pink-500" },
   { name: "Ms. Bello", role: "English, SS1", quote: "The student insights caught two kids who were quietly drowning. We turned them around.", color: "bg-cyan-500" },
 ];
 
 const FAQS = [
-  { q: "Is TeacherGPT really free to start?", a: "Yes — the core features are free forever. Upgrade only when you need bulk classes and advanced analytics." },
-  { q: "Will it work for my curriculum?", a: "TeacherGPT supports WAEC, NECO, Cambridge, IB and most national curricula. Just tell it what you teach." },
+  { q: "Is SchlarOS really free to start?", a: "Yes — the core features are free forever. Upgrade only when you need bulk classes and advanced analytics." },
+  { q: "Will it work for my curriculum?", a: "SchlarOS supports WAEC, NECO, Cambridge, IB and most national curricula. Just tell it what you teach." },
   { q: "Is my student data safe?", a: "Encrypted at rest and in transit. We never sell data. You own everything you create." },
-  { q: "Can I use it on my phone?", a: "Absolutely. TeacherGPT is fully responsive — phone, tablet, laptop, all good." },
+  { q: "Can I use it on my phone?", a: "Absolutely. SchlarOS is fully responsive — phone, tablet, laptop, all good." },
 ];
 
 const fadeUp = {
@@ -77,7 +77,7 @@ function Landing() {
             <GraduationCap className="h-6 w-6 text-white" />
           </div>
           <div>
-            <div className="text-gradient-primary font-display text-xl font-bold">TeacherGPT</div>
+            <div className="text-gradient-primary font-display text-xl font-bold">SchlarOS</div>
             <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Academic OS · Africa</div>
           </div>
         </div>
@@ -133,7 +133,7 @@ function Landing() {
           transition={{ delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
         >
-          <span className="font-semibold text-foreground">An AI-powered Academic Operating System for Africa.</span> TeacherGPT unifies lesson planning, grading, attendance, analytics, and parent communication — so schools run smarter and teachers teach freer.
+          <span className="font-semibold text-foreground">An AI-powered Academic Operating System for Africa.</span> SchlarOS unifies lesson planning, grading, attendance, analytics, and parent communication — so schools run smarter and teachers teach freer.
         </motion.p>
 
         <motion.div
@@ -406,7 +406,7 @@ function Landing() {
               Ready to teach like a legend?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-white/90 md:text-lg">
-              Join 10,000+ teachers using TeacherGPT to do more, faster — without burning out.
+              Join 10,000+ teachers using SchlarOS to do more, faster — without burning out.
             </p>
             <Link
               to="/dashboard"
@@ -427,13 +427,13 @@ function Landing() {
             <div className="bg-gradient-primary flex h-9 w-9 items-center justify-center rounded-xl">
               <GraduationCap className="h-5 w-5 text-white" />
             </div>
-            <div className="text-gradient-primary font-display font-bold">TeacherGPT</div>
+            <div className="text-gradient-primary font-display font-bold">SchlarOS</div>
           </div>
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <Globe className="h-3.5 w-3.5" /> Built worldwide
           </div>
           <div className="text-xs text-muted-foreground">
-            © 2026 TeacherGPT — Made with <span className="text-electric-pink">♥</span> by Chief Tolulope
+            © 2026 SchlarOS — Made with <span className="text-electric-pink">♥</span> by Chief Tolulope
           </div>
         </div>
       </footer>

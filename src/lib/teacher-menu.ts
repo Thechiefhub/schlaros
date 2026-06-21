@@ -164,7 +164,7 @@ export const SECTIONS: MenuSection[] = [
 export const MENU: MenuItem[] = SECTIONS.flatMap((s) => s.items).filter((i) => i.to);
 
 export const APP_BRAND = {
-  name: "TeacherGPT",
+  name: "SchlarOS",
   tagline: "AI School OS",
   icon: GraduationCap,
 };

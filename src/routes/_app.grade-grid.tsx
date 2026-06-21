@@ -6,7 +6,7 @@ import { CLASSES, SUBJECTS, studentsFor } from "@/lib/sample-data";
 import { usePersisted } from "@/hooks/use-persisted";
 
 export const Route = createFileRoute("/_app/grade-grid")({
-  head: () => ({ meta: [{ title: "Grade Grid — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Grade Grid — SchlarOS" }] }),
   component: GradeGrid,
 });
 

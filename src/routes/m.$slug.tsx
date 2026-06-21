@@ -4,7 +4,7 @@ import { Video, Mic, MicOff, VideoOff, PhoneOff, Users, GraduationCap, Copy, Che
 import { shareUrl } from "@/lib/store";
 
 export const Route = createFileRoute("/m/$slug")({
-  head: ({ params }) => ({ meta: [{ title: `Live · ${params.slug} — TeacherGPT` }] }),
+  head: ({ params }) => ({ meta: [{ title: `Live · ${params.slug} — SchlarOS` }] }),
   component: MeetingRoom,
 });
 
@@ -81,7 +81,7 @@ function MeetingRoom() {
             <div className="bg-gradient-primary flex h-9 w-9 items-center justify-center rounded-xl">
               <GraduationCap className="h-5 w-5 text-white" />
             </div>
-            <span className="font-display font-bold">TeacherGPT Live</span>
+            <span className="font-display font-bold">SchlarOS Live</span>
           </Link>
         </header>
         <main className="mx-auto grid max-w-5xl gap-8 p-6 md:grid-cols-2 md:p-10">

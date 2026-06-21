@@ -5,7 +5,7 @@ import { PageHeader, Section } from "@/components/page-header";
 import { getAssessments, getSubmissions, updateSubmission, type Submission, type Assessment } from "@/lib/store";
 
 export const Route = createFileRoute("/_app/submissions")({
-  head: () => ({ meta: [{ title: "Submissions — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Submissions — SchlarOS" }] }),
   component: SubmissionsPage,
 });
 

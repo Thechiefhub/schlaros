@@ -11,7 +11,7 @@ const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 const PERIODS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export const Route = createFileRoute("/_app/timetables")({
-  head: () => ({ meta: [{ title: "Timetables — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Timetables — SchlarOS" }] }),
   component: TimetablesPage,
 });
 

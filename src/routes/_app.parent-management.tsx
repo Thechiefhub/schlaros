@@ -5,7 +5,7 @@ import { CrudPage } from "@/components/crud-page";
 type Parent = { id: string; name: string; email: string; phone: string; child: string; relationship: string };
 
 export const Route = createFileRoute("/_app/parent-management")({
-  head: () => ({ meta: [{ title: "Parent Management — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Parent Management — SchlarOS" }] }),
   component: () => (
     <CrudPage<Parent>
       storageKey="tg.parents"

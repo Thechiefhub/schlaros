@@ -6,7 +6,7 @@ import { CLASSES, studentsFor } from "@/lib/sample-data";
 import { usePersisted } from "@/hooks/use-persisted";
 
 export const Route = createFileRoute("/_app/seating-chart")({
-  head: () => ({ meta: [{ title: "Seating Chart — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Seating Chart — SchlarOS" }] }),
   component: SeatingChart,
 });
 

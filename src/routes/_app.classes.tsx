@@ -11,7 +11,7 @@ type Klass = {
 };
 
 export const Route = createFileRoute("/_app/classes")({
-  head: () => ({ meta: [{ title: "Classes — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Classes — SchlarOS" }] }),
   component: () => (
     <CrudPage<Klass>
       storageKey="tg.classes"

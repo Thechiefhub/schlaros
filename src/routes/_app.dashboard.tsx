@@ -9,7 +9,7 @@ import {
 export const Route = createFileRoute("/_app/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — TeacherGPT" },
+      { title: "Dashboard — SchlarOS" },
       { name: "description", content: "Your AI-powered teaching command center." },
     ],
   }),

@@ -4,7 +4,7 @@ import { PlaceholderPage } from "@/components/placeholder-page";
 
 // Same admin-level surface as /timetables — alias kept so school-management menu links resolve.
 export const Route = createFileRoute("/_app/timetable-management")({
-  head: () => ({ meta: [{ title: "Timetable Management — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Timetable Management — SchlarOS" }] }),
   component: () => (
     <PlaceholderPage
       title="Timetable Management"

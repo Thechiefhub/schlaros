@@ -6,7 +6,7 @@ import { CLASSES } from "@/lib/sample-data";
 import { addSubmission, getAssessmentBySlug, gradeMCQ, isMCQ, type Assessment, type Submission } from "@/lib/store";
 
 export const Route = createFileRoute("/q/$slug")({
-  head: ({ params }) => ({ meta: [{ title: `Assessment · ${params.slug} — TeacherGPT` }] }),
+  head: ({ params }) => ({ meta: [{ title: `Assessment · ${params.slug} — SchlarOS` }] }),
   component: PublicAssessment,
 });
 
@@ -98,7 +98,7 @@ function PublicAssessment() {
             <div className="bg-gradient-primary flex h-9 w-9 items-center justify-center rounded-xl">
               <GraduationCap className="h-5 w-5 text-white" />
             </div>
-            <span className="font-display text-lg font-bold">TeacherGPT</span>
+            <span className="font-display text-lg font-bold">SchlarOS</span>
           </Link>
           {phase === "attempt" && (
             <div className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm">

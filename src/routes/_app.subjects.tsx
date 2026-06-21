@@ -5,7 +5,7 @@ import { CrudPage } from "@/components/crud-page";
 type Subject = { id: string; name: string; code: string; department: string; level: string };
 
 export const Route = createFileRoute("/_app/subjects")({
-  head: () => ({ meta: [{ title: "Subjects — TeacherGPT" }] }),
+  head: () => ({ meta: [{ title: "Subjects — SchlarOS" }] }),
   component: () => (
     <CrudPage<Subject>
       storageKey="tg.subjects"
