@@ -203,13 +203,13 @@ function Landing() {
         </div>
         <div className="flex items-center gap-2">
           <Link
-            to="/dashboard"
+            to="/login"
             className="hidden rounded-2xl border border-border bg-white/70 px-4 py-2.5 text-sm font-semibold text-foreground backdrop-blur-md transition-colors hover:bg-white sm:inline-flex"
           >
             Sign In
           </Link>
           <Link
-            to="/dashboard"
+            to="/login"
             className="bg-gradient-primary glow-primary rounded-2xl px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
           >
             Get Started
@@ -271,14 +271,14 @@ function Landing() {
           className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <Link
-            to="/dashboard"
+            to="/login"
             className="bg-gradient-primary glow-primary group inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-white transition-transform hover:scale-105"
           >
             Get Started Free
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            to="/dashboard"
+            to="/login"
             className="glass inline-flex items-center gap-2 rounded-2xl px-7 py-4 text-base font-bold text-foreground transition-all hover:-translate-y-0.5"
           >
             Sign In to your account

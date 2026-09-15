@@ -138,3 +138,33 @@ export function isMCQ(a: Assessment): boolean {
     a.questions.every((q) => Array.isArray(q.options) && q.options.length > 0)
   );
 }
+
+// ── User Sessions & Auth ──────────────────────────────────────────────────
+export type UserRole = "admin" | "teacher" | "student" | "parent";
+
+export type UserSession = {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  school?: string;
+  avatarUrl?: string;
+  admissionNo?: string;
+  klass?: string;
+};
+
+const SESSION_KEY = "schlaros.session.v1";
+
+export function getSession(): UserSession | null {
+  // If no session is saved yet, we default to Tolulope A. (Teacher) to preserve backwards-compatibility
+  const session = readLS<UserSession | null>(SESSION_KEY, null);
+  return session;
+}
+
+export function saveSession(session: UserSession | null): void {
+  writeLS(SESSION_KEY, session);
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("schlaros-auth-change"));
+  }
+}
+

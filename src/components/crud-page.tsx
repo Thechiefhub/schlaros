@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Plus, Trash2, Pencil, Search, X } from "lucide-react";
+import { Plus, Trash2, Pencil, Search, X, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PageHeader, Section } from "@/components/page-header";
 import { usePersisted } from "@/hooks/use-persisted";
@@ -45,6 +45,7 @@ export function CrudPage<T extends { id: string }>({
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState<Record<string, unknown>>(initial() as Record<string, unknown>);
   const [q, setQ] = useState("");
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   const pk = primaryKey ?? (fields[0]?.key as keyof T & string);
 
@@ -70,7 +71,13 @@ export function CrudPage<T extends { id: string }>({
     setOpen(false);
   }
   function remove(id: string) {
-    setItems(items.filter((x) => x.id !== id));
+    setConfirmDeleteId(id);
+  }
+  function executeRemove() {
+    if (confirmDeleteId) {
+      setItems(items.filter((x) => x.id !== confirmDeleteId));
+      setConfirmDeleteId(null);
+    }
   }
 
   const filtered = q
@@ -252,6 +259,54 @@ export function CrudPage<T extends { id: string }>({
                   className="bg-gradient-primary rounded-xl px-5 py-2 text-sm font-semibold text-white"
                 >
                   Save
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {confirmDeleteId && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            onClick={() => setConfirmDeleteId(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-md rounded-2xl border border-white/10 bg-zinc-950 p-6 shadow-2xl"
+            >
+              <div className="flex items-center gap-3 text-red-500">
+                <div className="rounded-xl bg-red-500/10 p-2.5">
+                  <AlertTriangle className="h-6 w-6" />
+                </div>
+                <h3 className="font-display text-lg font-bold text-white">
+                  Confirm Record Deletion
+                </h3>
+              </div>
+              <p className="mt-4 text-sm text-white/60 leading-relaxed">
+                Are you sure you want to delete this {itemNoun.toLowerCase()}? This action will
+                permanently remove this important academic record from SchlarOS and cannot be
+                undone.
+              </p>
+              <div className="mt-6 flex justify-end gap-3">
+                <button
+                  onClick={() => setConfirmDeleteId(null)}
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white/80 hover:bg-white/10"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={executeRemove}
+                  className="rounded-xl bg-red-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-500 transition-colors"
+                >
+                  Confirm Delete
                 </button>
               </div>
             </motion.div>

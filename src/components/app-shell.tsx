@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
@@ -19,6 +19,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SECTIONS, APP_BRAND, QUICK_ACTIONS, MENU, type MenuItem } from "@/lib/teacher-menu";
 import { usePersisted } from "@/hooks/use-persisted";
+import { getSession, saveSession } from "@/lib/store";
 
 function MenuRow({
   item,
@@ -67,27 +68,28 @@ function MenuRow({
         <Icon className="h-4 w-4 shrink-0 transition-transform group-hover:scale-110" />
         <span className="truncate">{item.label}</span>
       </Link>
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onTogglePin(item.to!);
-        }}
-        className={`absolute right-1.5 top-1/2 -translate-y-1/2 rounded-md p-1 transition-opacity ${
-          pinned ? "opacity-100" : "opacity-0 group-hover/row:opacity-100"
-        }`}
-        title={pinned ? "Unpin" : "Pin to favorites"}
-      >
-        <Star
-          className={`h-3.5 w-3.5 ${pinned ? "fill-amber text-amber" : "text-white/50 hover:text-white"}`}
-        />
-      </button>
     </div>
   );
 }
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const [session, setSessionState] = useState(() => getSession());
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setSessionState(getSession());
+    };
+    window.addEventListener("schlaros-auth-change", handleAuthChange);
+    return () => window.removeEventListener("schlaros-auth-change", handleAuthChange);
+  }, []);
+
+  const handleLogout = () => {
+    saveSession(null);
+    navigate({ to: "/login" });
+  };
+
   const Brand = APP_BRAND.icon;
   const [query, setQuery] = useState("");
   const [openSections, setOpenSections] = usePersisted<Record<string, boolean>>(
@@ -129,13 +131,18 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
     setFavorites((prev) => (prev.includes(to) ? prev.filter((p) => p !== to) : [...prev, to]));
 
   const q = query.trim().toLowerCase();
+  const activeRole = session?.role ?? "teacher";
+
   const filteredSections = useMemo(() => {
-    if (!q) return SECTIONS;
-    return SECTIONS.map((s) => ({
-      ...s,
-      items: s.items.filter((i) => i.label.toLowerCase().includes(q)),
-    })).filter((s) => s.items.length > 0);
-  }, [q]);
+    const raw = q ? SECTIONS : SECTIONS.filter((s) => !s.roles || s.roles.includes(activeRole));
+    if (!q) return raw;
+    return raw
+      .map((s) => ({
+        ...s,
+        items: s.items.filter((i) => i.label.toLowerCase().includes(q)),
+      }))
+      .filter((s) => s.items.length > 0);
+  }, [q, activeRole]);
 
   const favItems = favorites
     .map((to) => MENU.find((m) => m.to === to))
@@ -230,48 +237,6 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
       {/* Scrollable nav */}
       <nav className="scrollbar-thin mt-3 flex-1 space-y-3 overflow-y-auto px-3 pb-4">
-        {/* Favorites */}
-        {!q && favItems.length > 0 && (
-          <div>
-            <div className="mb-1 flex items-center gap-1.5 px-2 text-[10px] font-bold uppercase tracking-wider text-white/40">
-              <Star className="h-3 w-3 text-amber" /> Favorites
-            </div>
-            <div className="space-y-0.5">
-              {favItems.map((item) => (
-                <MenuRow
-                  key={`fav-${item.to}`}
-                  item={item}
-                  active={pathname === item.to}
-                  onNavigate={onNavigate}
-                  pinned
-                  onTogglePin={togglePin}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Recents */}
-        {!q && recentItems.length > 0 && (
-          <div>
-            <div className="mb-1 flex items-center gap-1.5 px-2 text-[10px] font-bold uppercase tracking-wider text-white/40">
-              <Clock className="h-3 w-3 text-cyan" /> Recent
-            </div>
-            <div className="space-y-0.5">
-              {recentItems.map((item) => (
-                <MenuRow
-                  key={`rec-${item.to}`}
-                  item={item}
-                  active={pathname === item.to}
-                  onNavigate={onNavigate}
-                  pinned={favorites.includes(item.to!)}
-                  onTogglePin={togglePin}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
         {/* Sections */}
         {filteredSections.map((section) => {
           const isOpen = q ? true : (openSections[section.id] ?? true);
@@ -337,11 +302,24 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       <div className="border-t border-white/10 p-3">
         <div className="group relative flex items-center gap-2.5 rounded-lg border border-white/5 bg-white/[0.04] px-2 py-2 hover:bg-white/[0.08]">
           <div className="bg-gradient-secondary flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-white shadow-lg">
-            TA
+            {session
+              ? session.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase()
+                  .slice(0, 2)
+              : "TA"}
           </div>
           <div className="min-w-0 flex-1">
-            <div className="truncate text-xs font-semibold text-white">Tolulope A.</div>
-            <div className="truncate text-[10px] text-white/50">Teacher • Legends Academy</div>
+            <div className="truncate text-xs font-semibold text-white">
+              {session ? session.name : "Tolulope A."}
+            </div>
+            <div className="truncate text-[10px] text-white/50">
+              {session
+                ? `${session.role.charAt(0).toUpperCase() + session.role.slice(1)} • ${session.klass || session.school || "SchlarOS"}`
+                : "Teacher • Legends Academy"}
+            </div>
           </div>
           <ChevronsUpDown className="h-3.5 w-3.5 text-white/40" />
         </div>
@@ -350,13 +328,14 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
             { icon: Bell, label: "Alerts" },
             { icon: Settings, label: "Settings" },
             { icon: LifeBuoy, label: "Help" },
-            { icon: LogOut, label: "Logout" },
+            { icon: LogOut, label: "Logout", action: handleLogout },
           ].map((a) => {
             const I = a.icon;
             return (
               <button
                 key={a.label}
                 title={a.label}
+                onClick={a.action}
                 className="flex items-center justify-center rounded-md py-1.5 text-white/60 hover:bg-white/10 hover:text-white"
               >
                 <I className="h-3.5 w-3.5" />

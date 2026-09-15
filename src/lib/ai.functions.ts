@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { GoogleGenAI } from "@google/genai";
 
 const Input = z.object({
   system: z.string().optional(),
@@ -11,47 +12,52 @@ const Input = z.object({
 export const generateAI = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => Input.parse(d))
   .handler(async ({ data }) => {
-    const key = process.env.LOVABLE_API_KEY;
-    if (!key) throw new Error("Missing LOVABLE_API_KEY");
+    const apiKey = process.env.GEMINI_API_KEY || process.env.LOVABLE_API_KEY;
+    if (!apiKey) {
+      throw new Error("Missing GEMINI_API_KEY. Please provide your Gemini API Key in Settings.");
+    }
 
-    const messages = [
-      ...(data.system ? [{ role: "system", content: data.system }] : []),
-      { role: "user", content: data.prompt },
-    ];
-
-    const body: Record<string, unknown> = {
-      model: data.model ?? "google/gemini-3-flash-preview",
-      messages,
-    };
-    if (data.json) body.response_format = { type: "json_object" };
-
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Lovable-API-Key": key,
+    const ai = new GoogleGenAI({
+      apiKey,
+      httpOptions: {
+        headers: {
+          "User-Agent": "aistudio-build",
+        },
       },
-      body: JSON.stringify(body),
     });
 
-    if (!res.ok) {
-      const text = await res.text();
-      if (res.status === 429) throw new Error("Rate limit hit. Try again in a moment.");
-      if (res.status === 402)
-        throw new Error("AI credits exhausted. Please top up your workspace.");
-      throw new Error(`AI error ${res.status}: ${text.slice(0, 200)}`);
-    }
-    const out = await res.json();
-    const content: string = out?.choices?.[0]?.message?.content ?? "";
+    const targetModel = data.model && !data.model.includes("gemini-1.5") && !data.model.includes("gemini-2.0")
+      ? data.model
+      : "gemini-3.8-flash";
+
+    const response = await ai.models.generateContent({
+      model: targetModel,
+      contents: data.prompt,
+      config: {
+        systemInstruction: data.system,
+        responseMimeType: data.json ? "application/json" : undefined,
+      },
+    });
+
+    const content = response.text || "";
     let parsed: unknown = null;
+
     if (data.json) {
       try {
         parsed = JSON.parse(content);
       } catch {
         const m = content.match(/\{[\s\S]*\}/);
-        if (m) parsed = JSON.parse(m[0]);
-        else throw new Error("AI returned invalid JSON");
+        if (m) {
+          try {
+            parsed = JSON.parse(m[0]);
+          } catch {
+            throw new Error("AI returned invalid JSON structure");
+          }
+        } else {
+          throw new Error("AI did not output a valid JSON block");
+        }
       }
     }
-    return { text: content, json: JSON.stringify(parsed) };
+
+    return { text: content, json: data.json ? JSON.stringify(parsed) : null };
   });
