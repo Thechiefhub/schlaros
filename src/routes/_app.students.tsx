@@ -26,11 +26,30 @@ export const Route = createFileRoute("/_app/students")({
       fields={[
         { key: "name", label: "Full Name", required: true },
         { key: "admissionNo", label: "Admission No.", required: true, placeholder: "SCH/2026/001" },
-        { key: "klass", label: "Class", type: "select", options: CLASSES, required: true, badge: true },
-        { key: "gender", label: "Gender", type: "select", options: ["Male", "Female"], badge: true },
+        {
+          key: "klass",
+          label: "Class",
+          type: "select",
+          options: CLASSES,
+          required: true,
+          badge: true,
+        },
+        {
+          key: "gender",
+          label: "Gender",
+          type: "select",
+          options: ["Male", "Female"],
+          badge: true,
+        },
         { key: "parentEmail", label: "Parent Email", type: "email" },
       ]}
-      initial={() => ({ name: "", admissionNo: "", klass: CLASSES[0], gender: "Male", parentEmail: "" })}
+      initial={() => ({
+        name: "",
+        admissionNo: "",
+        klass: CLASSES[0],
+        gender: "Male",
+        parentEmail: "",
+      })}
     />
   ),
 });

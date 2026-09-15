@@ -37,7 +37,8 @@ export const generateAI = createServerFn({ method: "POST" })
     if (!res.ok) {
       const text = await res.text();
       if (res.status === 429) throw new Error("Rate limit hit. Try again in a moment.");
-      if (res.status === 402) throw new Error("AI credits exhausted. Please top up your workspace.");
+      if (res.status === 402)
+        throw new Error("AI credits exhausted. Please top up your workspace.");
       throw new Error(`AI error ${res.status}: ${text.slice(0, 200)}`);
     }
     const out = await res.json();

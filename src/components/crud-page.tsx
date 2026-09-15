@@ -75,7 +75,11 @@ export function CrudPage<T extends { id: string }>({
 
   const filtered = q
     ? items.filter((it) =>
-        Object.values(it as object).some((v) => String(v ?? "").toLowerCase().includes(q.toLowerCase())),
+        Object.values(it as object).some((v) =>
+          String(v ?? "")
+            .toLowerCase()
+            .includes(q.toLowerCase()),
+        ),
       )
     : items;
 
@@ -124,7 +128,9 @@ export function CrudPage<T extends { id: string }>({
             {filtered.map((it) => (
               <li key={it.id} className="flex items-center justify-between gap-3 py-3">
                 <div className="min-w-0 flex-1">
-                  <div className="truncate font-semibold">{String((it as Record<string, unknown>)[pk] ?? "—")}</div>
+                  <div className="truncate font-semibold">
+                    {String((it as Record<string, unknown>)[pk] ?? "—")}
+                  </div>
                   {secondaryKey && (
                     <div className="truncate text-xs text-muted-foreground">
                       {String((it as Record<string, unknown>)[secondaryKey] ?? "")}
@@ -185,7 +191,10 @@ export function CrudPage<T extends { id: string }>({
                 <h3 className="font-display text-lg font-semibold">
                   {editId ? `Edit ${itemNoun}` : `New ${itemNoun}`}
                 </h3>
-                <button onClick={() => setOpen(false)} className="rounded-lg p-1.5 hover:bg-white/40">
+                <button
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg p-1.5 hover:bg-white/40"
+                >
                   <X className="h-4 w-4" />
                 </button>
               </div>

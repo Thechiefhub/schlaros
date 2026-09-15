@@ -1,0 +1,12 @@
+{
+  "name": "SchlarOS",
+  "description": "An AI-powered teaching platform and command center for educators to manage curriculum, lesson notes, assessments, timetables, and academic sessions.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

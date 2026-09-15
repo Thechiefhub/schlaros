@@ -57,11 +57,7 @@ function MenuRow({
 
   return (
     <div className="group/row relative">
-      <Link
-        to={item.to}
-        onClick={onNavigate}
-        className={`${baseCls} ${stateCls}`}
-      >
+      <Link to={item.to} onClick={onNavigate} className={`${baseCls} ${stateCls}`}>
         {active && (
           <motion.div
             layoutId="nav-active-bar"
@@ -130,9 +126,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   }, []);
 
   const togglePin = (to: string) =>
-    setFavorites((prev) =>
-      prev.includes(to) ? prev.filter((p) => p !== to) : [...prev, to],
-    );
+    setFavorites((prev) => (prev.includes(to) ? prev.filter((p) => p !== to) : [...prev, to]));
 
   const q = query.trim().toLowerCase();
   const filteredSections = useMemo(() => {
@@ -280,14 +274,12 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
         {/* Sections */}
         {filteredSections.map((section) => {
-          const isOpen = q ? true : openSections[section.id] ?? true;
+          const isOpen = q ? true : (openSections[section.id] ?? true);
           const SectionIcon = section.icon;
           return (
             <div key={section.id} className="">
               <button
-                onClick={() =>
-                  setOpenSections((prev) => ({ ...prev, [section.id]: !isOpen }))
-                }
+                onClick={() => setOpenSections((prev) => ({ ...prev, [section.id]: !isOpen }))}
                 className="group flex w-full items-center gap-2 rounded-lg border border-white/5 bg-white/[0.03] px-2 py-1.5 text-left transition-all hover:border-white/10 hover:bg-white/[0.06]"
               >
                 <div

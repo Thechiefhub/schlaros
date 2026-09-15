@@ -23,7 +23,14 @@ export const Route = createFileRoute("/_app/classes")({
       secondaryKey="formTeacher"
       fields={[
         { key: "name", label: "Class Name", required: true, placeholder: "JSS 1A" },
-        { key: "level", label: "Level", type: "select", options: ["JSS", "SSS"], required: true, badge: true },
+        {
+          key: "level",
+          label: "Level",
+          type: "select",
+          options: ["JSS", "SSS"],
+          required: true,
+          badge: true,
+        },
         { key: "formTeacher", label: "Form Teacher", required: true },
         { key: "capacity", label: "Capacity", type: "number" },
       ]}

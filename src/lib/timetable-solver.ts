@@ -186,8 +186,7 @@ export function solveTimetable(
         for (const r of candidateRooms) {
           if (isFree(u.course, r.id, d, p, u.span)) {
             place(u.course, r.id, d, p, u.span, placed);
-            if (!usedDaysByCourse.has(u.course.id))
-              usedDaysByCourse.set(u.course.id, new Set());
+            if (!usedDaysByCourse.has(u.course.id)) usedDaysByCourse.set(u.course.id, new Set());
             usedDaysByCourse.get(u.course.id)!.add(d);
             found = true;
             break outer;

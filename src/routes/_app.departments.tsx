@@ -22,8 +22,18 @@ export const Route = createFileRoute("/_app/departments")({
       ]}
       initial={() => ({ name: "", head: "", description: "" })}
       seed={[
-        { id: "d1", name: "Sciences", head: "Mr. Chinedu Okafor", description: "Physics, Chemistry, Biology" },
-        { id: "d2", name: "Humanities", head: "Mrs. Funke Adesuwa", description: "Literature, History, CRS" },
+        {
+          id: "d1",
+          name: "Sciences",
+          head: "Mr. Chinedu Okafor",
+          description: "Physics, Chemistry, Biology",
+        },
+        {
+          id: "d2",
+          name: "Humanities",
+          head: "Mrs. Funke Adesuwa",
+          description: "Literature, History, CRS",
+        },
       ]}
     />
   ),

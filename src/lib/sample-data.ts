@@ -5,7 +5,18 @@ export const SUBJECTS = ALL_NERDC_SUBJECTS;
 export const TERMS = ["First Term", "Second Term", "Third Term"];
 
 export const SAMPLE_STUDENTS: Record<string, string[]> = {
-  JSS1: ["Ada Lovelace", "Tunde Bakare", "Chioma Eze", "Kunle Adebayo", "Fatima Bello", "Emeka Okafor", "Aisha Yusuf", "David Okon", "Ngozi Umeh", "Bola Adeniyi"],
+  JSS1: [
+    "Ada Lovelace",
+    "Tunde Bakare",
+    "Chioma Eze",
+    "Kunle Adebayo",
+    "Fatima Bello",
+    "Emeka Okafor",
+    "Aisha Yusuf",
+    "David Okon",
+    "Ngozi Umeh",
+    "Bola Adeniyi",
+  ],
   JSS2: ["Zainab Hassan", "Chinedu Obi", "Grace Etim", "Yusuf Ali", "Ruth Mensah", "Samuel Idris"],
   JSS3: ["Daniel Kuti", "Hauwa Garba", "Ibrahim Sule", "Patience Eze"],
   SS1: ["Olu Adigun", "Rita Onyeka", "Bashir Musa", "Funke Ade"],

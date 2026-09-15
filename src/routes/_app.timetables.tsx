@@ -1,5 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CalendarClock, Cpu, Plus, Trash2, Sparkles, AlertTriangle, Download, Upload, LayoutTemplate } from "lucide-react";
+import {
+  CalendarClock,
+  Cpu,
+  Plus,
+  Trash2,
+  Sparkles,
+  AlertTriangle,
+  Download,
+  Upload,
+  LayoutTemplate,
+} from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { PageHeader, Section } from "@/components/page-header";
 import { usePersisted } from "@/hooks/use-persisted";
@@ -48,9 +58,28 @@ const TEMPLATES: Template[] = [
     periods: 8,
     apply: ({ teachers }) => ({
       courses: [
-        { id: uid(), subject: "Mathematics", classGroup: "JSS1", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 5, heavy: true },
-        { id: uid(), subject: "English Studies", classGroup: "JSS1", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 4 },
-        { id: uid(), subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 3 },
+        {
+          id: uid(),
+          subject: "Mathematics",
+          classGroup: "JSS1",
+          teacherId: teachers[0]?.id ?? "",
+          periodsPerWeek: 5,
+          heavy: true,
+        },
+        {
+          id: uid(),
+          subject: "English Studies",
+          classGroup: "JSS1",
+          teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 4,
+        },
+        {
+          id: uid(),
+          subject: "Basic Science and Technology",
+          classGroup: "JSS1",
+          teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 3,
+        },
       ],
     }),
   },
@@ -63,9 +92,31 @@ const TEMPLATES: Template[] = [
     periods: 6,
     apply: ({ teachers }) => ({
       courses: [
-        { id: uid(), subject: "Mathematics", classGroup: "JSS1", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2, heavy: true },
-        { id: uid(), subject: "English Studies", classGroup: "JSS1", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2 },
-        { id: uid(), subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 2 },
+        {
+          id: uid(),
+          subject: "Mathematics",
+          classGroup: "JSS1",
+          teacherId: teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 2,
+          heavy: true,
+        },
+        {
+          id: uid(),
+          subject: "English Studies",
+          classGroup: "JSS1",
+          teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 2,
+        },
+        {
+          id: uid(),
+          subject: "Basic Science and Technology",
+          classGroup: "JSS1",
+          teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 2,
+        },
       ],
     }),
   },
@@ -77,13 +128,51 @@ const TEMPLATES: Template[] = [
     days: DEFAULT_DAYS,
     periods: 6,
     apply: ({ teachers, rooms }) => ({
-      rooms: rooms.some((r) => r.type === "hall") ? rooms : [...rooms, { id: uid(), name: "Main Hall", type: "hall" }],
+      rooms: rooms.some((r) => r.type === "hall")
+        ? rooms
+        : [...rooms, { id: uid(), name: "Main Hall", type: "hall" }],
       courses: [
-        { id: uid(), subject: "Mathematics", classGroup: "SS3", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3, heavy: true },
-        { id: uid(), subject: "English Studies", classGroup: "SS3", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
-        { id: uid(), subject: "Biology", classGroup: "SS3", teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
-        { id: uid(), subject: "Chemistry", classGroup: "SS3", teacherId: teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
-        { id: uid(), subject: "Physics", classGroup: "SS3", teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "", periodsPerWeek: 1, durationPeriods: 3 },
+        {
+          id: uid(),
+          subject: "Mathematics",
+          classGroup: "SS3",
+          teacherId: teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 3,
+          heavy: true,
+        },
+        {
+          id: uid(),
+          subject: "English Studies",
+          classGroup: "SS3",
+          teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 3,
+        },
+        {
+          id: uid(),
+          subject: "Biology",
+          classGroup: "SS3",
+          teacherId: teachers[2]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 3,
+        },
+        {
+          id: uid(),
+          subject: "Chemistry",
+          classGroup: "SS3",
+          teacherId: teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 3,
+        },
+        {
+          id: uid(),
+          subject: "Physics",
+          classGroup: "SS3",
+          teacherId: teachers[1]?.id ?? teachers[0]?.id ?? "",
+          periodsPerWeek: 1,
+          durationPeriods: 3,
+        },
       ],
     }),
   },
@@ -91,7 +180,10 @@ const TEMPLATES: Template[] = [
 
 // ---------- CSV parsing ----------
 function parseCSV(text: string): Record<string, string>[] {
-  const lines = text.replace(/\r/g, "").split("\n").filter((l) => l.trim());
+  const lines = text
+    .replace(/\r/g, "")
+    .split("\n")
+    .filter((l) => l.trim());
   if (lines.length < 2) return [];
   const splitRow = (row: string) => {
     const out: string[] = [];
@@ -100,10 +192,14 @@ function parseCSV(text: string): Record<string, string>[] {
     for (let i = 0; i < row.length; i++) {
       const ch = row[i];
       if (ch === '"') {
-        if (q && row[i + 1] === '"') { cur += '"'; i++; }
-        else q = !q;
-      } else if (ch === "," && !q) { out.push(cur); cur = ""; }
-      else cur += ch;
+        if (q && row[i + 1] === '"') {
+          cur += '"';
+          i++;
+        } else q = !q;
+      } else if (ch === "," && !q) {
+        out.push(cur);
+        cur = "";
+      } else cur += ch;
     }
     out.push(cur);
     return out.map((c) => c.trim());
@@ -134,9 +230,28 @@ function TimetablesPage() {
     { id: "r4", name: "Main Hall", type: "hall" },
   ]);
   const [courses, setCourses] = usePersisted<Course[]>("tg.tt.courses", [
-    { id: "c1", subject: "Mathematics", classGroup: "JSS1", teacherId: "t2", periodsPerWeek: 5, heavy: true },
-    { id: "c2", subject: "English Studies", classGroup: "JSS1", teacherId: "t3", periodsPerWeek: 4 },
-    { id: "c3", subject: "Basic Science and Technology", classGroup: "JSS1", teacherId: "t1", periodsPerWeek: 3 },
+    {
+      id: "c1",
+      subject: "Mathematics",
+      classGroup: "JSS1",
+      teacherId: "t2",
+      periodsPerWeek: 5,
+      heavy: true,
+    },
+    {
+      id: "c2",
+      subject: "English Studies",
+      classGroup: "JSS1",
+      teacherId: "t3",
+      periodsPerWeek: 4,
+    },
+    {
+      id: "c3",
+      subject: "Basic Science and Technology",
+      classGroup: "JSS1",
+      teacherId: "t1",
+      periodsPerWeek: 3,
+    },
   ]);
 
   const [result, setResult] = useState<SolveResult | null>(null);
@@ -272,7 +387,14 @@ function TimetablesPage() {
             <input
               className="input mt-1"
               value={days.join(",")}
-              onChange={(e) => setDays(e.target.value.split(",").map((d) => d.trim()).filter(Boolean))}
+              onChange={(e) =>
+                setDays(
+                  e.target.value
+                    .split(",")
+                    .map((d) => d.trim())
+                    .filter(Boolean),
+                )
+              }
             />
           </label>
           <label className="text-xs font-semibold text-muted-foreground">
@@ -291,7 +413,9 @@ function TimetablesPage() {
 
       <Section
         title="Reusable templates"
-        action={<span className="text-xs text-muted-foreground">Prefill the planner with one click</span>}
+        action={
+          <span className="text-xs text-muted-foreground">Prefill the planner with one click</span>
+        }
       >
         <div className="grid gap-3 sm:grid-cols-3">
           {TEMPLATES.map((t) => (
@@ -334,13 +458,23 @@ function TimetablesPage() {
                 onChange={(e) => {
                   importCSV(
                     e.target.files?.[0],
-                    (row) => row.name ? { id: uid(), name: row.name, maxPerDay: Number(row.maxperday) || undefined } : null,
+                    (row) =>
+                      row.name
+                        ? {
+                            id: uid(),
+                            name: row.name,
+                            maxPerDay: Number(row.maxperday) || undefined,
+                          }
+                        : null,
                     (items) => setTeachers([...teachers, ...items]),
                   );
                   e.target.value = "";
                 }}
               />
-              <button onClick={addTeacher} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+              <button
+                onClick={addTeacher}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-primary"
+              >
                 <Plus className="h-3.5 w-3.5" /> Add
               </button>
             </div>
@@ -403,7 +537,9 @@ function TimetablesPage() {
                     e.target.files?.[0],
                     (row) => {
                       if (!row.name) return null;
-                      const type = (["classroom", "lab", "hall"].includes(row.type) ? row.type : "classroom") as Room["type"];
+                      const type = (
+                        ["classroom", "lab", "hall"].includes(row.type) ? row.type : "classroom"
+                      ) as Room["type"];
                       return { id: uid(), name: row.name, type };
                     },
                     (items) => setRooms([...rooms, ...items]),
@@ -411,7 +547,10 @@ function TimetablesPage() {
                   e.target.value = "";
                 }}
               />
-              <button onClick={addRoom} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+              <button
+                onClick={addRoom}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-primary"
+              >
                 <Plus className="h-3.5 w-3.5" /> Add
               </button>
             </div>
@@ -495,7 +634,10 @@ function TimetablesPage() {
                 e.target.value = "";
               }}
             />
-            <button onClick={addCourse} className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+            <button
+              onClick={addCourse}
+              className="inline-flex items-center gap-1 text-xs font-semibold text-primary"
+            >
               <Plus className="h-3.5 w-3.5" /> Add course
             </button>
           </div>
@@ -565,11 +707,14 @@ function TimetablesPage() {
                       type="number"
                       min={1}
                       className="input w-20"
-                      value={mode === "class" ? c.periodsPerWeek : c.durationPeriods ?? 1}
+                      value={mode === "class" ? c.periodsPerWeek : (c.durationPeriods ?? 1)}
                       onChange={(e) => {
                         const v = Math.max(1, Number(e.target.value) || 1);
                         const next = [...courses];
-                        next[i] = mode === "class" ? { ...c, periodsPerWeek: v } : { ...c, durationPeriods: v };
+                        next[i] =
+                          mode === "class"
+                            ? { ...c, periodsPerWeek: v }
+                            : { ...c, durationPeriods: v };
                         setCourses(next);
                       }}
                     />

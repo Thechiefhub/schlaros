@@ -119,7 +119,10 @@ export function updateSubmission(id: string, patch: Partial<Submission>) {
   writeLS(S_KEY, list);
 }
 
-export function gradeMCQ(assessment: Assessment, answers: string[]): { score: number; correctCount: number } {
+export function gradeMCQ(
+  assessment: Assessment,
+  answers: string[],
+): { score: number; correctCount: number } {
   let correct = 0;
   assessment.questions.forEach((q, i) => {
     if (!q.options) return;
@@ -130,5 +133,8 @@ export function gradeMCQ(assessment: Assessment, answers: string[]): { score: nu
 }
 
 export function isMCQ(a: Assessment): boolean {
-  return a.questions.length > 0 && a.questions.every((q) => Array.isArray(q.options) && q.options.length > 0);
+  return (
+    a.questions.length > 0 &&
+    a.questions.every((q) => Array.isArray(q.options) && q.options.length > 0)
+  );
 }

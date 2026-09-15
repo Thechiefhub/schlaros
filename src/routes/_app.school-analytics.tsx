@@ -25,8 +25,12 @@ function SchoolAnalytics() {
     const a = getAssessments();
     const s = getSubmissions();
     const scored = s.filter((x) => typeof x.score === "number");
-    const avg = scored.length ? Math.round(scored.reduce((t, x) => t + (x.score ?? 0), 0) / scored.length) : 0;
-    const pass = scored.length ? Math.round((scored.filter((x) => (x.score ?? 0) >= 50).length / scored.length) * 100) : 0;
+    const avg = scored.length
+      ? Math.round(scored.reduce((t, x) => t + (x.score ?? 0), 0) / scored.length)
+      : 0;
+    const pass = scored.length
+      ? Math.round((scored.filter((x) => (x.score ?? 0) >= 50).length / scored.length) * 100)
+      : 0;
     const subjMap = new Map<string, number>();
     a.forEach((x) => subjMap.set(x.subject, (subjMap.get(x.subject) ?? 0) + 1));
     const teachers = JSON.parse(localStorage.getItem("tg.teachers") ?? "[]").length;
@@ -56,11 +60,17 @@ function SchoolAnalytics() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <PageHeader icon={PieChart} title="School Analytics" description="Whole-school KPIs across teachers, students, assessments, and outcomes." />
+      <PageHeader
+        icon={PieChart}
+        title="School Analytics"
+        description="Whole-school KPIs across teachers, students, assessments, and outcomes."
+      />
       <div className="grid gap-3 md:grid-cols-4">
         {tiles.map((t) => (
           <div key={t.label} className={`glass rounded-2xl p-4`}>
-            <div className={`mb-2 inline-block rounded-lg bg-gradient-to-r ${t.color} px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white`}>
+            <div
+              className={`mb-2 inline-block rounded-lg bg-gradient-to-r ${t.color} px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white`}
+            >
               {t.label}
             </div>
             <div className="font-display text-3xl font-bold">{t.value}</div>
@@ -74,7 +84,10 @@ function SchoolAnalytics() {
         ) : (
           <ul className="space-y-2">
             {stats.bySubject.map((row) => {
-              const pct = Math.min(100, (row.count / Math.max(...stats.bySubject.map((r) => r.count))) * 100);
+              const pct = Math.min(
+                100,
+                (row.count / Math.max(...stats.bySubject.map((r) => r.count))) * 100,
+              );
               return (
                 <li key={row.name} className="text-sm">
                   <div className="mb-1 flex justify-between">

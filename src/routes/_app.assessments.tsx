@@ -1,6 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ClipboardList, Sparkles, Loader2, Download, Share2, Copy, Check, ExternalLink, Trash2 } from "lucide-react";
+import {
+  ClipboardList,
+  Sparkles,
+  Loader2,
+  Download,
+  Share2,
+  Copy,
+  Check,
+  ExternalLink,
+  Trash2,
+} from "lucide-react";
 import { PageHeader, Section } from "@/components/page-header";
 import { CLASSES, SUBJECTS } from "@/lib/sample-data";
 import { generateAI } from "@/lib/ai.functions";
@@ -87,7 +97,10 @@ function AssessmentsPage() {
 
   function exportJSON() {
     if (!current) return;
-    const blob = new Blob([JSON.stringify({ title, subject, klass, topic, questions: current }, null, 2)], { type: "application/json" });
+    const blob = new Blob(
+      [JSON.stringify({ title, subject, klass, topic, questions: current }, null, 2)],
+      { type: "application/json" },
+    );
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -104,54 +117,128 @@ function AssessmentsPage() {
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
-      <PageHeader icon={ClipboardList} title="Create Assessment" description="AI-generated quizzes — share a link, auto-grade MCQs, collect theory submissions." />
+      <PageHeader
+        icon={ClipboardList}
+        title="Create Assessment"
+        description="AI-generated quizzes — share a link, auto-grade MCQs, collect theory submissions."
+      />
 
       <Section
         title="Assessment Setup"
         action={
           <div className="inline-flex rounded-xl bg-white/50 p-1 text-sm">
-            <button onClick={() => setMode("single")} className={`rounded-lg px-3 py-1.5 ${mode === "single" ? "bg-gradient-primary text-white" : ""}`}>Single Subject</button>
-            <button onClick={() => setMode("multi")} className={`rounded-lg px-3 py-1.5 ${mode === "multi" ? "bg-gradient-primary text-white" : ""}`}>Multi-Subject</button>
+            <button
+              onClick={() => setMode("single")}
+              className={`rounded-lg px-3 py-1.5 ${mode === "single" ? "bg-gradient-primary text-white" : ""}`}
+            >
+              Single Subject
+            </button>
+            <button
+              onClick={() => setMode("multi")}
+              className={`rounded-lg px-3 py-1.5 ${mode === "multi" ? "bg-gradient-primary text-white" : ""}`}
+            >
+              Multi-Subject
+            </button>
           </div>
         }
       >
         <div className="grid gap-4 md:grid-cols-2">
-          <Field label="Title"><input className="input" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Mid-term Quiz" /></Field>
+          <Field label="Title">
+            <input
+              className="input"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Mid-term Quiz"
+            />
+          </Field>
           <Field label="Question Type">
             <select className="input" value={qType} onChange={(e) => setQType(e.target.value)}>
-              {["Multiple Choice", "True / False", "Short Answer", "Essay"].map((t) => <option key={t}>{t}</option>)}
+              {["Multiple Choice", "True / False", "Short Answer", "Essay"].map((t) => (
+                <option key={t}>{t}</option>
+              ))}
             </select>
           </Field>
           <Field label="Subject *">
             <select className="input" value={subject} onChange={(e) => setSubject(e.target.value)}>
-              {SUBJECTS.map((s) => <option key={s}>{s}</option>)}
+              {SUBJECTS.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
             </select>
           </Field>
           <Field label="Class *">
             <select className="input" value={klass} onChange={(e) => setKlass(e.target.value)}>
-              {CLASSES.map((c) => <option key={c}>{c}</option>)}
+              {CLASSES.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
             </select>
           </Field>
-          <Field label="Topic *"><input className="input" value={topic} onChange={(e) => setTopic(e.target.value)} placeholder="Fractions, Photosynthesis…" /></Field>
-          <Field label="Number of Questions"><input type="number" min={1} max={50} className="input" value={count} onChange={(e) => setCount(+e.target.value)} /></Field>
+          <Field label="Topic *">
+            <input
+              className="input"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              placeholder="Fractions, Photosynthesis…"
+            />
+          </Field>
+          <Field label="Number of Questions">
+            <input
+              type="number"
+              min={1}
+              max={50}
+              className="input"
+              value={count}
+              onChange={(e) => setCount(+e.target.value)}
+            />
+          </Field>
           <Field label="Difficulty">
-            <select className="input" value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-              {["Easy", "Medium", "Hard"].map((d) => <option key={d}>{d}</option>)}
+            <select
+              className="input"
+              value={difficulty}
+              onChange={(e) => setDifficulty(e.target.value)}
+            >
+              {["Easy", "Medium", "Hard"].map((d) => (
+                <option key={d}>{d}</option>
+              ))}
             </select>
           </Field>
-          <Field label="Time Limit (minutes)"><input type="number" min={5} className="input" value={time} onChange={(e) => setTime(+e.target.value)} /></Field>
+          <Field label="Time Limit (minutes)">
+            <input
+              type="number"
+              min={5}
+              className="input"
+              value={time}
+              onChange={(e) => setTime(+e.target.value)}
+            />
+          </Field>
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          <button disabled={!topic || loading} onClick={generate} className="bg-gradient-primary glow-primary inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50">
-            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />} Generate Assessment
+          <button
+            disabled={!topic || loading}
+            onClick={generate}
+            className="bg-gradient-primary glow-primary inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+          >
+            {loading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Sparkles className="h-4 w-4" />
+            )}{" "}
+            Generate Assessment
           </button>
           {current && (
             <>
-              <button onClick={save} className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600">
+              <button
+                onClick={save}
+                className="rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-600"
+              >
                 Save &amp; create share link
               </button>
-              <button onClick={exportJSON} className="inline-flex items-center gap-2 rounded-xl border border-white/40 bg-white/60 px-4 py-2.5 text-sm font-semibold"><Download className="h-4 w-4" /> Export</button>
+              <button
+                onClick={exportJSON}
+                className="inline-flex items-center gap-2 rounded-xl border border-white/40 bg-white/60 px-4 py-2.5 text-sm font-semibold"
+              >
+                <Download className="h-4 w-4" /> Export
+              </button>
             </>
           )}
         </div>
@@ -163,16 +250,29 @@ function AssessmentsPage() {
           <ol className="space-y-4">
             {current.map((q, i) => (
               <li key={i} className="rounded-2xl border border-white/40 bg-white/60 p-4">
-                <p className="font-medium">{i + 1}. {q.q}</p>
+                <p className="font-medium">
+                  {i + 1}. {q.q}
+                </p>
                 {q.options && (
                   <ul className="mt-2 grid gap-1.5 text-sm md:grid-cols-2">
                     {q.options.map((o, idx) => (
-                      <li key={idx} className={`rounded-lg border px-3 py-1.5 ${o === q.answer ? "border-emerald-400 bg-emerald-50 font-semibold" : "border-white/40"}`}>{o}</li>
+                      <li
+                        key={idx}
+                        className={`rounded-lg border px-3 py-1.5 ${o === q.answer ? "border-emerald-400 bg-emerald-50 font-semibold" : "border-white/40"}`}
+                      >
+                        {o}
+                      </li>
                     ))}
                   </ul>
                 )}
-                {!q.options && <p className="mt-2 text-sm text-muted-foreground"><span className="font-semibold">Answer:</span> {q.answer}</p>}
-                {q.explanation && <p className="mt-2 text-xs text-muted-foreground">💡 {q.explanation}</p>}
+                {!q.options && (
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    <span className="font-semibold">Answer:</span> {q.answer}
+                  </p>
+                )}
+                {q.explanation && (
+                  <p className="mt-2 text-xs text-muted-foreground">💡 {q.explanation}</p>
+                )}
               </li>
             ))}
           </ol>
@@ -190,7 +290,8 @@ function AssessmentsPage() {
                     <div className="min-w-0">
                       <div className="font-semibold">{a.title}</div>
                       <div className="text-xs text-muted-foreground">
-                        {a.subject} · {a.klass} · {a.questions.length} questions · {a.duration}m · {new Date(a.createdAt).toLocaleDateString()}
+                        {a.subject} · {a.klass} · {a.questions.length} questions · {a.duration}m ·{" "}
+                        {new Date(a.createdAt).toLocaleDateString()}
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -206,7 +307,11 @@ function AssessmentsPage() {
                         onClick={() => copyLink(a)}
                         className="inline-flex items-center gap-1 rounded-lg bg-gradient-primary px-3 py-1.5 text-xs font-semibold text-white"
                       >
-                        {copiedId === a.id ? <Check className="h-3.5 w-3.5" /> : <Share2 className="h-3.5 w-3.5" />}
+                        {copiedId === a.id ? (
+                          <Check className="h-3.5 w-3.5" />
+                        ) : (
+                          <Share2 className="h-3.5 w-3.5" />
+                        )}
                         {copiedId === a.id ? "Copied!" : "Share link"}
                       </button>
                       <button
@@ -226,7 +331,11 @@ function AssessmentsPage() {
             })}
           </ul>
           <p className="mt-3 text-xs text-muted-foreground">
-            Tip: visit <Link to="/submissions" className="font-semibold text-primary">Submissions</Link> to grade theory answers and review MCQ results.
+            Tip: visit{" "}
+            <Link to="/submissions" className="font-semibold text-primary">
+              Submissions
+            </Link>{" "}
+            to grade theory answers and review MCQ results.
           </p>
         </Section>
       )}

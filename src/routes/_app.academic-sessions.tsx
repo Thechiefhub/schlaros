@@ -16,10 +16,21 @@ export const Route = createFileRoute("/_app/academic-sessions")({
       primaryKey="name"
       secondaryKey="status"
       fields={[
-        { key: "name", label: "Session Name", required: true, placeholder: "2025/2026 — First Term" },
+        {
+          key: "name",
+          label: "Session Name",
+          required: true,
+          placeholder: "2025/2026 — First Term",
+        },
         { key: "startDate", label: "Start Date", type: "date", required: true },
         { key: "endDate", label: "End Date", type: "date", required: true },
-        { key: "status", label: "Status", type: "select", options: ["Upcoming", "Active", "Completed"], badge: true },
+        {
+          key: "status",
+          label: "Status",
+          type: "select",
+          options: ["Upcoming", "Active", "Completed"],
+          badge: true,
+        },
       ]}
       initial={() => ({ name: "", startDate: "", endDate: "", status: "Upcoming" })}
     />

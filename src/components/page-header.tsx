@@ -24,8 +24,12 @@ export function PageHeader({
           <Icon className="h-6 w-6 text-white" />
         </div>
         <div>
-          <h1 className="text-gradient-primary font-display text-3xl font-bold md:text-4xl">{title}</h1>
-          {description && <p className="text-muted-foreground text-sm md:text-base">{description}</p>}
+          <h1 className="text-gradient-primary font-display text-3xl font-bold md:text-4xl">
+            {title}
+          </h1>
+          {description && (
+            <p className="text-muted-foreground text-sm md:text-base">{description}</p>
+          )}
         </div>
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
@@ -33,7 +37,15 @@ export function PageHeader({
   );
 }
 
-export function Section({ title, children, action }: { title: string; children: ReactNode; action?: ReactNode }) {
+export function Section({
+  title,
+  children,
+  action,
+}: {
+  title: string;
+  children: ReactNode;
+  action?: ReactNode;
+}) {
   return (
     <section className="glass rounded-3xl border border-white/40 p-5 md:p-6">
       <div className="mb-4 flex items-center justify-between gap-3">

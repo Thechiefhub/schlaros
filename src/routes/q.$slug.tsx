@@ -1,9 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap, Sparkles, CheckCircle2, XCircle, Trophy, Clock, ArrowRight } from "lucide-react";
+import {
+  GraduationCap,
+  Sparkles,
+  CheckCircle2,
+  XCircle,
+  Trophy,
+  Clock,
+  ArrowRight,
+} from "lucide-react";
 import { CLASSES } from "@/lib/sample-data";
-import { addSubmission, getAssessmentBySlug, gradeMCQ, isMCQ, type Assessment, type Submission } from "@/lib/store";
+import {
+  addSubmission,
+  getAssessmentBySlug,
+  gradeMCQ,
+  isMCQ,
+  type Assessment,
+  type Submission,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/q/$slug")({
   head: ({ params }) => ({ meta: [{ title: `Assessment · ${params.slug} — SchlarOS` }] }),
@@ -18,7 +33,12 @@ function PublicAssessment() {
   const [phase, setPhase] = useState<Phase>("landing");
   const [student, setStudent] = useState({ name: "", email: "", klass: CLASSES[0] });
   const [answers, setAnswers] = useState<string[]>([]);
-  const [result, setResult] = useState<{ submission: Submission; score: number; correct: number; total: number } | null>(null);
+  const [result, setResult] = useState<{
+    submission: Submission;
+    score: number;
+    correct: number;
+    total: number;
+  } | null>(null);
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
@@ -42,7 +62,10 @@ function PublicAssessment() {
           <p className="mt-2 text-muted-foreground">
             This link may have expired or been removed. Please contact your teacher.
           </p>
-          <Link to="/" className="bg-gradient-primary mt-6 inline-flex rounded-xl px-5 py-2.5 text-sm font-semibold text-white">
+          <Link
+            to="/"
+            className="bg-gradient-primary mt-6 inline-flex rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
+          >
             Back to home
           </Link>
         </div>
@@ -122,7 +145,9 @@ function PublicAssessment() {
                 <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                   <Sparkles className="h-3 w-3" /> {assessment.subject} · {assessment.klass}
                 </span>
-                <h1 className="text-gradient-primary mt-4 font-display text-4xl font-bold">{assessment.title}</h1>
+                <h1 className="text-gradient-primary mt-4 font-display text-4xl font-bold">
+                  {assessment.title}
+                </h1>
                 <p className="mt-2 text-muted-foreground">
                   {assessment.questions.length} questions · {assessment.duration ?? 30} minutes ·{" "}
                   {mcq ? "Auto-graded MCQ" : "Theory — graded by teacher"}
@@ -148,7 +173,11 @@ function PublicAssessment() {
                   />
                 </Field>
                 <Field label="Class *">
-                  <select className="input" value={student.klass} onChange={(e) => setStudent({ ...student, klass: e.target.value })}>
+                  <select
+                    className="input"
+                    value={student.klass}
+                    onChange={(e) => setStudent({ ...student, klass: e.target.value })}
+                  >
                     {CLASSES.map((c) => (
                       <option key={c}>{c}</option>
                     ))}
@@ -157,7 +186,8 @@ function PublicAssessment() {
               </div>
 
               <div className="mt-6 rounded-2xl bg-amber-50/80 p-4 text-xs text-amber-900">
-                ⚠️ Please answer all questions honestly. Once submitted, your responses cannot be changed.
+                ⚠️ Please answer all questions honestly. Once submitted, your responses cannot be
+                changed.
               </div>
 
               <button
@@ -192,7 +222,9 @@ function PublicAssessment() {
                         <label
                           key={o}
                           className={`flex cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm transition ${
-                            answers[i] === o ? "border-primary bg-primary/5 font-semibold" : "border-white/40 bg-white/50 hover:bg-white/80"
+                            answers[i] === o
+                              ? "border-primary bg-primary/5 font-semibold"
+                              : "border-white/40 bg-white/50 hover:bg-white/80"
                           }`}
                         >
                           <input
@@ -246,9 +278,12 @@ function PublicAssessment() {
                   <div className="bg-gradient-primary mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl">
                     <Trophy className="h-10 w-10 text-white" />
                   </div>
-                  <h1 className="text-gradient-primary font-display text-5xl font-bold">{result.score}%</h1>
+                  <h1 className="text-gradient-primary font-display text-5xl font-bold">
+                    {result.score}%
+                  </h1>
                   <p className="mt-2 text-muted-foreground">
-                    You got <span className="font-semibold text-foreground">{result.correct}</span> of {result.total} correct
+                    You got <span className="font-semibold text-foreground">{result.correct}</span>{" "}
+                    of {result.total} correct
                   </p>
 
                   <div className="mt-8 space-y-3 text-left">
@@ -257,7 +292,10 @@ function PublicAssessment() {
                       const userA = result.submission.answers[i] ?? "";
                       const ok = (userA ?? "").trim() === (q.answer ?? "").trim();
                       return (
-                        <div key={i} className={`rounded-2xl border p-4 text-sm ${ok ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50"}`}>
+                        <div
+                          key={i}
+                          className={`rounded-2xl border p-4 text-sm ${ok ? "border-emerald-300 bg-emerald-50/50" : "border-rose-300 bg-rose-50/50"}`}
+                        >
                           <div className="flex items-start gap-2">
                             {ok ? (
                               <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
@@ -269,14 +307,28 @@ function PublicAssessment() {
                                 {i + 1}. {q.q}
                               </p>
                               <p className="mt-1 text-xs">
-                                Your answer: <span className={ok ? "font-semibold text-emerald-700" : "font-semibold text-rose-700"}>{userA || "—"}</span>
+                                Your answer:{" "}
+                                <span
+                                  className={
+                                    ok
+                                      ? "font-semibold text-emerald-700"
+                                      : "font-semibold text-rose-700"
+                                  }
+                                >
+                                  {userA || "—"}
+                                </span>
                               </p>
                               {!ok && (
                                 <p className="text-xs">
-                                  Correct: <span className="font-semibold text-emerald-700">{q.answer}</span>
+                                  Correct:{" "}
+                                  <span className="font-semibold text-emerald-700">{q.answer}</span>
                                 </p>
                               )}
-                              {q.explanation && <p className="mt-1 text-xs text-muted-foreground">💡 {q.explanation}</p>}
+                              {q.explanation && (
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                  💡 {q.explanation}
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -289,13 +341,18 @@ function PublicAssessment() {
                   <div className="bg-gradient-primary mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-3xl">
                     <CheckCircle2 className="h-10 w-10 text-white" />
                   </div>
-                  <h1 className="text-gradient-primary font-display text-3xl font-bold">Submission received</h1>
+                  <h1 className="text-gradient-primary font-display text-3xl font-bold">
+                    Submission received
+                  </h1>
                   <p className="mt-2 text-muted-foreground">
                     Your answers have been recorded. Your teacher will grade your responses shortly.
                   </p>
                 </>
               )}
-              <Link to="/" className="mt-8 inline-flex rounded-xl border border-white/40 bg-white/60 px-5 py-2.5 text-sm font-semibold">
+              <Link
+                to="/"
+                className="mt-8 inline-flex rounded-xl border border-white/40 bg-white/60 px-5 py-2.5 text-sm font-semibold"
+              >
                 Done
               </Link>
             </motion.section>

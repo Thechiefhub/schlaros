@@ -2,18 +2,41 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import {
-  GraduationCap, Sparkles, Zap, Brain, ArrowRight, Star, Check,
-  ClipboardList, BarChart3, Bot, Calendar, MessageCircle,
-  Quote, ChevronDown, Rocket, Heart, Globe, Award,
+  GraduationCap,
+  Sparkles,
+  Zap,
+  Brain,
+  ArrowRight,
+  Star,
+  Check,
+  ClipboardList,
+  BarChart3,
+  Bot,
+  Calendar,
+  MessageCircle,
+  Quote,
+  ChevronDown,
+  Rocket,
+  Heart,
+  Globe,
+  Award,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "SchlarOS — The Operating System for Modern Education" },
-      { name: "description", content: "SchlarOS is the operating system for modern education. Lesson planning, grading, attendance, analytics and timetables — aligned with the new NERDC curriculum." },
+      {
+        name: "description",
+        content:
+          "SchlarOS is the operating system for modern education. Lesson planning, grading, attendance, analytics and timetables — aligned with the new NERDC curriculum.",
+      },
       { property: "og:title", content: "SchlarOS — The Operating System for Modern Education" },
-      { property: "og:description", content: "Lesson planning, grading, attendance, analytics and timetables — aligned with the new NERDC curriculum." },
+      {
+        property: "og:description",
+        content:
+          "Lesson planning, grading, attendance, analytics and timetables — aligned with the new NERDC curriculum.",
+      },
       { property: "og:type", content: "website" },
     ],
   }),
@@ -28,31 +51,100 @@ const STATS = [
 ];
 
 const FEATURES = [
-  { icon: Brain, title: "AI Lesson Notes", desc: "Generate curriculum-aligned lesson notes in seconds. Edit, regenerate, ship.", color: "from-purple-400 to-pink-400" },
-  { icon: ClipboardList, title: "Smart Assessments", desc: "Quizzes, drills, and tests built around your syllabus and your students.", color: "from-pink-400 to-orange-400" },
-  { icon: Zap, title: "Bulk Grading", desc: "Mark 40 papers in the time it took to mark 4. With smart feedback.", color: "from-amber-400 to-pink-400" },
-  { icon: BarChart3, title: "Performance Heatmaps", desc: "Spot the class that's slipping. Spot the student who needs you.", color: "from-emerald-400 to-cyan-400" },
-  { icon: Bot, title: "AI Assistant", desc: "Your 24/7 teaching partner. Ask anything. Get answers that actually help.", color: "from-cyan-400 to-blue-400" },
-  { icon: Calendar, title: "Master Calendar", desc: "Lessons, meetings, assessments — one calendar to rule them all.", color: "from-purple-400 to-blue-400" },
+  {
+    icon: Brain,
+    title: "AI Lesson Notes",
+    desc: "Generate curriculum-aligned lesson notes in seconds. Edit, regenerate, ship.",
+    color: "from-purple-400 to-pink-400",
+  },
+  {
+    icon: ClipboardList,
+    title: "Smart Assessments",
+    desc: "Quizzes, drills, and tests built around your syllabus and your students.",
+    color: "from-pink-400 to-orange-400",
+  },
+  {
+    icon: Zap,
+    title: "Bulk Grading",
+    desc: "Mark 40 papers in the time it took to mark 4. With smart feedback.",
+    color: "from-amber-400 to-pink-400",
+  },
+  {
+    icon: BarChart3,
+    title: "Performance Heatmaps",
+    desc: "Spot the class that's slipping. Spot the student who needs you.",
+    color: "from-emerald-400 to-cyan-400",
+  },
+  {
+    icon: Bot,
+    title: "AI Assistant",
+    desc: "Your 24/7 teaching partner. Ask anything. Get answers that actually help.",
+    color: "from-cyan-400 to-blue-400",
+  },
+  {
+    icon: Calendar,
+    title: "Master Calendar",
+    desc: "Lessons, meetings, assessments — one calendar to rule them all.",
+    color: "from-purple-400 to-blue-400",
+  },
 ];
 
 const STEPS = [
-  { n: "01", title: "Sign up in 30 seconds", desc: "No credit card. No setup tax. Open the app and start." },
-  { n: "02", title: "Tell us your subjects & classes", desc: "We tune SchlarOS to your curriculum, your tone, your style." },
-  { n: "03", title: "Generate, teach, repeat", desc: "Lesson notes, quizzes, reports — all one click away. Forever." },
+  {
+    n: "01",
+    title: "Sign up in 30 seconds",
+    desc: "No credit card. No setup tax. Open the app and start.",
+  },
+  {
+    n: "02",
+    title: "Tell us your subjects & classes",
+    desc: "We tune SchlarOS to your curriculum, your tone, your style.",
+  },
+  {
+    n: "03",
+    title: "Generate, teach, repeat",
+    desc: "Lesson notes, quizzes, reports — all one click away. Forever.",
+  },
 ];
 
 const TESTIMONIALS = [
-  { name: "Mrs. Adeyemi", role: "Biology, SS2", quote: "I got my Sundays back. That alone makes SchlarOS priceless. The lesson notes are gold.", color: "bg-purple-500" },
-  { name: "Mr. Okafor", role: "Mathematics, JSS3", quote: "Bulk grading used to take my whole weekend. Now it takes one cup of coffee. Wild.", color: "bg-pink-500" },
-  { name: "Ms. Bello", role: "English, SS1", quote: "The student insights caught two kids who were quietly drowning. We turned them around.", color: "bg-cyan-500" },
+  {
+    name: "Mrs. Adeyemi",
+    role: "Biology, SS2",
+    quote: "I got my Sundays back. That alone makes SchlarOS priceless. The lesson notes are gold.",
+    color: "bg-purple-500",
+  },
+  {
+    name: "Mr. Okafor",
+    role: "Mathematics, JSS3",
+    quote: "Bulk grading used to take my whole weekend. Now it takes one cup of coffee. Wild.",
+    color: "bg-pink-500",
+  },
+  {
+    name: "Ms. Bello",
+    role: "English, SS1",
+    quote: "The student insights caught two kids who were quietly drowning. We turned them around.",
+    color: "bg-cyan-500",
+  },
 ];
 
 const FAQS = [
-  { q: "Is SchlarOS really free to start?", a: "Yes — the core features are free forever. Upgrade only when you need bulk classes and advanced analytics." },
-  { q: "Will it work for my curriculum?", a: "SchlarOS supports WAEC, NECO, Cambridge, IB and most national curricula. Just tell it what you teach." },
-  { q: "Is my student data safe?", a: "Encrypted at rest and in transit. We never sell data. You own everything you create." },
-  { q: "Can I use it on my phone?", a: "Absolutely. SchlarOS is fully responsive — phone, tablet, laptop, all good." },
+  {
+    q: "Is SchlarOS really free to start?",
+    a: "Yes — the core features are free forever. Upgrade only when you need bulk classes and advanced analytics.",
+  },
+  {
+    q: "Will it work for my curriculum?",
+    a: "SchlarOS supports WAEC, NECO, Cambridge, IB and most national curricula. Just tell it what you teach.",
+  },
+  {
+    q: "Is my student data safe?",
+    a: "Encrypted at rest and in transit. We never sell data. You own everything you create.",
+  },
+  {
+    q: "Can I use it on my phone?",
+    a: "Absolutely. SchlarOS is fully responsive — phone, tablet, laptop, all good.",
+  },
 ];
 
 const fadeUp = {
@@ -78,14 +170,36 @@ function Landing() {
           </div>
           <div>
             <div className="text-gradient-primary font-display text-xl font-bold">SchlarOS</div>
-            <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">Modern Education OS</div>
+            <div className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">
+              Modern Education OS
+            </div>
           </div>
         </div>
         <div className="hidden items-center gap-8 md:flex">
-          <a href="#features" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Features</a>
-          <a href="#how" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">How it works</a>
-          <a href="#love" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">Educators</a>
-          <a href="#faq" className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground">FAQ</a>
+          <a
+            href="#features"
+            className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground"
+          >
+            Features
+          </a>
+          <a
+            href="#how"
+            className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground"
+          >
+            How it works
+          </a>
+          <a
+            href="#love"
+            className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground"
+          >
+            Educators
+          </a>
+          <a
+            href="#faq"
+            className="text-sm font-semibold text-foreground/70 transition-colors hover:text-foreground"
+          >
+            FAQ
+          </a>
         </div>
         <div className="flex items-center gap-2">
           <Link
@@ -104,9 +218,18 @@ function Landing() {
       </nav>
 
       {/* HERO */}
-      <section ref={heroRef} className="relative z-10 mx-auto max-w-6xl px-6 pt-12 pb-24 text-center md:pt-20">
-        <motion.div style={{ y: blobY }} className="bg-gradient-primary pointer-events-none absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full opacity-30 blur-3xl" />
-        <motion.div style={{ y: blobY2 }} className="bg-gradient-secondary pointer-events-none absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full opacity-30 blur-3xl" />
+      <section
+        ref={heroRef}
+        className="relative z-10 mx-auto max-w-6xl px-6 pt-12 pb-24 text-center md:pt-20"
+      >
+        <motion.div
+          style={{ y: blobY }}
+          className="bg-gradient-primary pointer-events-none absolute -top-32 -left-32 h-[28rem] w-[28rem] rounded-full opacity-30 blur-3xl"
+        />
+        <motion.div
+          style={{ y: blobY2 }}
+          className="bg-gradient-secondary pointer-events-none absolute top-1/3 -right-32 h-[28rem] w-[28rem] rounded-full opacity-30 blur-3xl"
+        />
 
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -123,7 +246,8 @@ function Landing() {
           transition={{ delay: 0.1 }}
           className="font-display text-5xl leading-[1.02] font-bold md:text-7xl"
         >
-          The Operating System for<br />
+          The Operating System for
+          <br />
           <span className="text-gradient-primary">Modern Education.</span>
         </motion.h1>
 
@@ -133,7 +257,11 @@ function Landing() {
           transition={{ delay: 0.2 }}
           className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
         >
-          <span className="font-semibold text-foreground">SchlarOS — The Operating System for Modern Education.</span> One unified platform for lesson planning, grading, attendance, analytics, timetables and parent communication — aligned with the new NERDC curriculum.
+          <span className="font-semibold text-foreground">
+            SchlarOS — The Operating System for Modern Education.
+          </span>{" "}
+          One unified platform for lesson planning, grading, attendance, analytics, timetables and
+          parent communication — aligned with the new NERDC curriculum.
         </motion.p>
 
         <motion.div
@@ -172,9 +300,15 @@ function Landing() {
           transition={{ delay: 0.5 }}
           className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground"
         >
-          <span className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-emerald-500" /> No credit card</span>
-          <span className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-emerald-500" /> Setup in 30 seconds</span>
-          <span className="inline-flex items-center gap-1.5"><Check className="h-4 w-4 text-emerald-500" /> Cancel anytime</span>
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="h-4 w-4 text-emerald-500" /> No credit card
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="h-4 w-4 text-emerald-500" /> Setup in 30 seconds
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Check className="h-4 w-4 text-emerald-500" /> Cancel anytime
+          </span>
         </motion.div>
 
         {/* Hero preview card */}
@@ -241,8 +375,12 @@ function Landing() {
               transition={{ delay: i * 0.08 }}
               className="text-center"
             >
-              <div className="text-gradient-primary font-display text-4xl font-bold md:text-5xl">{s.value}</div>
-              <div className="mt-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">{s.label}</div>
+              <div className="text-gradient-primary font-display text-4xl font-bold md:text-5xl">
+                {s.value}
+              </div>
+              <div className="mt-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+                {s.label}
+              </div>
             </motion.div>
           ))}
         </div>
@@ -258,7 +396,8 @@ function Landing() {
             One app. <span className="text-gradient-primary">Every superpower.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-            We obsessed over the parts of teaching that should never have been hard. Then we shipped them.
+            We obsessed over the parts of teaching that should never have been hard. Then we shipped
+            them.
           </p>
         </motion.div>
 
@@ -275,12 +414,16 @@ function Landing() {
                 whileHover={{ y: -6 }}
                 className="glass group relative overflow-hidden rounded-3xl p-6 transition-shadow hover:shadow-2xl"
               >
-                <div className={`bg-gradient-to-br ${f.color} mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md`}>
+                <div
+                  className={`bg-gradient-to-br ${f.color} mb-4 flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md`}
+                >
                   <Icon className="h-6 w-6" />
                 </div>
                 <h3 className="text-xl font-bold">{f.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{f.desc}</p>
-                <div className={`bg-gradient-to-br ${f.color} absolute -right-12 -bottom-12 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity group-hover:opacity-30`} />
+                <div
+                  className={`bg-gradient-to-br ${f.color} absolute -right-12 -bottom-12 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity group-hover:opacity-30`}
+                />
               </motion.div>
             );
           })}
@@ -308,7 +451,9 @@ function Landing() {
               transition={{ delay: i * 0.1 }}
               className="glass relative rounded-3xl p-7"
             >
-              <div className="text-gradient-primary font-display text-6xl font-bold opacity-30">{s.n}</div>
+              <div className="text-gradient-primary font-display text-6xl font-bold opacity-30">
+                {s.n}
+              </div>
               <h3 className="mt-2 text-xl font-bold">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
             </motion.div>
@@ -326,7 +471,8 @@ function Landing() {
             Less paperwork. <span className="text-gradient-primary">More teaching.</span>
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">
-            Built for the real pains of the classroom — endless lesson notes, score sheets, attendance and reports.
+            Built for the real pains of the classroom — endless lesson notes, score sheets,
+            attendance and reports.
           </p>
         </motion.div>
 
@@ -348,8 +494,14 @@ function Landing() {
               </div>
               <p className="mt-4 text-foreground/85">"{t.quote}"</p>
               <div className="mt-6 flex items-center gap-3">
-                <div className={`${t.color} flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-white`}>
-                  {t.name.split(" ").map((p) => p[0]).join("").slice(0, 2)}
+                <div
+                  className={`${t.color} flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold text-white`}
+                >
+                  {t.name
+                    .split(" ")
+                    .map((p) => p[0])
+                    .join("")
+                    .slice(0, 2)}
                 </div>
                 <div>
                   <div className="text-sm font-bold">{t.name}</div>
@@ -436,7 +588,8 @@ function Landing() {
             <Globe className="h-3.5 w-3.5" /> Built worldwide
           </div>
           <div className="text-xs text-muted-foreground">
-            © 2026 SchlarOS — Made with <span className="text-electric-pink">♥</span> by Chief Tolulope
+            © 2026 SchlarOS — Made with <span className="text-electric-pink">♥</span> by Chief
+            Tolulope
           </div>
         </div>
       </footer>

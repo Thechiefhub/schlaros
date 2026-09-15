@@ -18,8 +18,20 @@ export const Route = createFileRoute("/_app/subjects")({
       fields={[
         { key: "name", label: "Subject Name", required: true },
         { key: "code", label: "Code", required: true, placeholder: "MTH101" },
-        { key: "department", label: "Department", type: "select", options: ["Sciences", "Humanities", "Arts", "Commercial", "Languages"], badge: true },
-        { key: "level", label: "Level", type: "select", options: ["JSS", "SSS", "Both"], badge: true },
+        {
+          key: "department",
+          label: "Department",
+          type: "select",
+          options: ["Sciences", "Humanities", "Arts", "Commercial", "Languages"],
+          badge: true,
+        },
+        {
+          key: "level",
+          label: "Level",
+          type: "select",
+          options: ["JSS", "SSS", "Both"],
+          badge: true,
+        },
       ]}
       initial={() => ({ name: "", code: "", department: "Sciences", level: "Both" })}
     />

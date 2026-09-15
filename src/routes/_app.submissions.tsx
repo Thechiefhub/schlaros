@@ -2,7 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Inbox, Search, CheckCircle2, Clock, Edit3, Save } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { PageHeader, Section } from "@/components/page-header";
-import { getAssessments, getSubmissions, updateSubmission, type Submission, type Assessment } from "@/lib/store";
+import {
+  getAssessments,
+  getSubmissions,
+  updateSubmission,
+  type Submission,
+  type Assessment,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/_app/submissions")({
   head: () => ({ meta: [{ title: "Submissions — SchlarOS" }] }),
@@ -25,10 +31,19 @@ function SubmissionsPage() {
 
   const filtered = useMemo(() => {
     return subs
-      .filter((s) => (filter === "auto" ? s.autoGraded : filter === "pending" ? s.needsReview && s.score === undefined : true))
+      .filter((s) =>
+        filter === "auto"
+          ? s.autoGraded
+          : filter === "pending"
+            ? s.needsReview && s.score === undefined
+            : true,
+      )
       .filter((s) =>
         q
-          ? [s.studentName, s.assessmentTitle, s.subject, s.klass].join(" ").toLowerCase().includes(q.toLowerCase())
+          ? [s.studentName, s.assessmentTitle, s.subject, s.klass]
+              .join(" ")
+              .toLowerCase()
+              .includes(q.toLowerCase())
           : true,
       );
   }, [subs, q, filter]);
@@ -47,7 +62,11 @@ function SubmissionsPage() {
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
-      <PageHeader icon={Inbox} title="Submissions" description="All MCQ and theory submissions — auto-graded results posted to the score sheet." />
+      <PageHeader
+        icon={Inbox}
+        title="Submissions"
+        description="All MCQ and theory submissions — auto-graded results posted to the score sheet."
+      />
 
       <Section
         title={`Submissions (${filtered.length})`}
@@ -55,7 +74,12 @@ function SubmissionsPage() {
           <div className="flex flex-wrap items-center gap-2">
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-              <input className="input pl-8" placeholder="Search student or assessment…" value={q} onChange={(e) => setQ(e.target.value)} />
+              <input
+                className="input pl-8"
+                placeholder="Search student or assessment…"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+              />
             </div>
             <div className="inline-flex rounded-xl bg-white/50 p-1 text-xs">
               {(["all", "auto", "pending"] as const).map((k) => (
@@ -72,7 +96,9 @@ function SubmissionsPage() {
         }
       >
         {filtered.length === 0 ? (
-          <p className="py-8 text-center text-sm text-muted-foreground">No submissions yet. Share an assessment link with your students.</p>
+          <p className="py-8 text-center text-sm text-muted-foreground">
+            No submissions yet. Share an assessment link with your students.
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
@@ -93,8 +119,12 @@ function SubmissionsPage() {
                     <td className="py-2 pr-3 font-semibold">{s.studentName}</td>
                     <td className="py-2 pr-3">{s.assessmentTitle}</td>
                     <td className="py-2 pr-3 text-muted-foreground">{s.klass}</td>
-                    <td className="py-2 pr-3 text-xs text-muted-foreground">{new Date(s.submittedAt).toLocaleString()}</td>
-                    <td className="py-2 pr-3 font-bold">{typeof s.score === "number" ? `${s.score}%` : "—"}</td>
+                    <td className="py-2 pr-3 text-xs text-muted-foreground">
+                      {new Date(s.submittedAt).toLocaleString()}
+                    </td>
+                    <td className="py-2 pr-3 font-bold">
+                      {typeof s.score === "number" ? `${s.score}%` : "—"}
+                    </td>
                     <td className="py-2 pr-3">
                       {s.autoGraded ? (
                         <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
@@ -130,8 +160,14 @@ function SubmissionsPage() {
       </Section>
 
       {active && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm" onClick={() => setActive(null)}>
-          <div className="glass max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl p-6" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+          onClick={() => setActive(null)}
+        >
+          <div
+            className="glass max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="mb-4 flex items-start justify-between">
               <div>
                 <h3 className="font-display text-xl font-bold">{active.studentName}</h3>
@@ -140,7 +176,9 @@ function SubmissionsPage() {
                 </p>
               </div>
               {typeof active.score === "number" && (
-                <div className="text-gradient-primary font-display text-3xl font-bold">{active.score}%</div>
+                <div className="text-gradient-primary font-display text-3xl font-bold">
+                  {active.score}%
+                </div>
               )}
             </div>
             {activeAssessment ? (
@@ -152,18 +190,24 @@ function SubmissionsPage() {
                     <li
                       key={i}
                       className={`rounded-2xl border p-3 text-sm ${
-                        ok === true ? "border-emerald-300 bg-emerald-50/50" : ok === false ? "border-rose-300 bg-rose-50/50" : "border-white/40 bg-white/50"
+                        ok === true
+                          ? "border-emerald-300 bg-emerald-50/50"
+                          : ok === false
+                            ? "border-rose-300 bg-rose-50/50"
+                            : "border-white/40 bg-white/50"
                       }`}
                     >
                       <p className="font-medium">
                         {i + 1}. {q.q}
                       </p>
                       <p className="mt-1 text-xs">
-                        <span className="text-muted-foreground">Answer:</span> <span className="font-semibold">{a || "—"}</span>
+                        <span className="text-muted-foreground">Answer:</span>{" "}
+                        <span className="font-semibold">{a || "—"}</span>
                       </p>
                       {q.options && ok === false && (
                         <p className="text-xs">
-                          <span className="text-muted-foreground">Correct:</span> <span className="font-semibold text-emerald-700">{q.answer}</span>
+                          <span className="text-muted-foreground">Correct:</span>{" "}
+                          <span className="font-semibold text-emerald-700">{q.answer}</span>
                         </p>
                       )}
                     </li>
@@ -196,7 +240,10 @@ function SubmissionsPage() {
             )}
 
             <div className="mt-4 text-right">
-              <button onClick={() => setActive(null)} className="rounded-xl border border-white/40 bg-white/60 px-4 py-2 text-sm font-semibold">
+              <button
+                onClick={() => setActive(null)}
+                className="rounded-xl border border-white/40 bg-white/60 px-4 py-2 text-sm font-semibold"
+              >
                 Close
               </button>
             </div>

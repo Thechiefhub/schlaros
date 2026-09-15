@@ -1,8 +1,19 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
-  Video, Mic, MicOff, VideoOff, PhoneOff, Users, GraduationCap, Copy, Check,
-  Wifi, WifiOff, Signal, Hand,
+  Video,
+  Mic,
+  MicOff,
+  VideoOff,
+  PhoneOff,
+  Users,
+  GraduationCap,
+  Copy,
+  Check,
+  Wifi,
+  WifiOff,
+  Signal,
+  Hand,
 } from "lucide-react";
 import { shareUrl } from "@/lib/store";
 
@@ -28,7 +39,9 @@ function useConnectionQuality(): Quality {
   useEffect(() => {
     function measure() {
       if (!navigator.onLine) return setQ("offline");
-      const c = (navigator as unknown as { connection?: { effectiveType?: string; downlink?: number } }).connection;
+      const c = (
+        navigator as unknown as { connection?: { effectiveType?: string; downlink?: number } }
+      ).connection;
       const eff = c?.effectiveType;
       if (eff === "4g") setQ("excellent");
       else if (eff === "3g") setQ("good");
@@ -69,10 +82,13 @@ function MeetingRoom() {
   const channelRef = useRef<BroadcastChannel | null>(null);
   const quality = useConnectionQuality();
 
-  useEffect(() => () => {
-    stopStream();
-    channelRef.current?.close();
-  }, []);
+  useEffect(
+    () => () => {
+      stopStream();
+      channelRef.current?.close();
+    },
+    [],
+  );
 
   async function startPreview(useVideo: boolean) {
     setError("");
@@ -141,7 +157,8 @@ function MeetingRoom() {
             return copy;
           }
           // On join, re-announce so the newcomer sees us.
-          if (m.type === "join") broadcast({ type: "update", name: me.name, micOn, camOn: me.camOn, handRaised });
+          if (m.type === "join")
+            broadcast({ type: "update", name: me.name, micOn, camOn: me.camOn, handRaised });
           return [...prev, next];
         });
       } else if (m.type === "leave") {
@@ -205,7 +222,13 @@ function MeetingRoom() {
         <main className="mx-auto grid max-w-5xl gap-8 p-6 md:grid-cols-2 md:p-10">
           <div className="aspect-video overflow-hidden rounded-3xl bg-black ring-1 ring-white/10">
             {streamRef.current ? (
-              <video ref={previewRef} autoPlay muted playsInline className="h-full w-full object-cover" />
+              <video
+                ref={previewRef}
+                autoPlay
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
             ) : (
               <div className="flex h-full items-center justify-center text-center">
                 <div>
@@ -224,7 +247,9 @@ function MeetingRoom() {
           <div>
             <p className="text-xs uppercase tracking-widest text-white/50">Joining meeting</p>
             <h1 className="font-display text-3xl font-bold">{slug}</h1>
-            <p className="mt-1 text-sm text-white/60">You'll join muted by default — unmute when ready.</p>
+            <p className="mt-1 text-sm text-white/60">
+              You'll join muted by default — unmute when ready.
+            </p>
 
             <label className="mt-6 block">
               <span className="mb-1.5 block text-xs font-semibold text-white/70">Your Name</span>
@@ -237,7 +262,11 @@ function MeetingRoom() {
               />
             </label>
 
-            <div className="mt-4 inline-flex rounded-xl bg-white/10 p-1 text-sm" role="tablist" aria-label="Meeting mode">
+            <div
+              className="mt-4 inline-flex rounded-xl bg-white/10 p-1 text-sm"
+              role="tablist"
+              aria-label="Meeting mode"
+            >
               {(["video", "audio"] as const).map((m) => (
                 <button
                   key={m}
@@ -245,12 +274,17 @@ function MeetingRoom() {
                   aria-selected={mode === m}
                   onClick={() => {
                     setMode(m);
-                    if (m === "audio") setCamOn(false); else setCamOn(true);
+                    if (m === "audio") setCamOn(false);
+                    else setCamOn(true);
                     if (streamRef.current) startPreview(m === "video");
                   }}
                   className={`rounded-lg px-4 py-1.5 ${mode === m ? "bg-gradient-primary text-white" : "text-white/70"}`}
                 >
-                  {m === "video" ? <Video className="mr-1 inline h-3.5 w-3.5" /> : <Mic className="mr-1 inline h-3.5 w-3.5" />}
+                  {m === "video" ? (
+                    <Video className="mr-1 inline h-3.5 w-3.5" />
+                  ) : (
+                    <Mic className="mr-1 inline h-3.5 w-3.5" />
+                  )}
                   {m === "video" ? "Video" : "Audio only"}
                 </button>
               ))}
@@ -258,7 +292,11 @@ function MeetingRoom() {
 
             <div className="mt-4 flex gap-2 text-xs">
               <button
-                onClick={() => { const n = !micOn; setMicOn(n); streamRef.current?.getAudioTracks().forEach(t => t.enabled = n); }}
+                onClick={() => {
+                  const n = !micOn;
+                  setMicOn(n);
+                  streamRef.current?.getAudioTracks().forEach((t) => (t.enabled = n));
+                }}
                 className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 ${micOn ? "bg-emerald-500/20 text-emerald-200" : "bg-white/10 text-white/70"}`}
                 aria-pressed={micOn}
                 aria-label={micOn ? "Microphone on" : "Microphone off"}
@@ -268,7 +306,11 @@ function MeetingRoom() {
               </button>
               {mode === "video" && (
                 <button
-                  onClick={() => { const n = !camOn; setCamOn(n); streamRef.current?.getVideoTracks().forEach(t => t.enabled = n); }}
+                  onClick={() => {
+                    const n = !camOn;
+                    setCamOn(n);
+                    streamRef.current?.getVideoTracks().forEach((t) => (t.enabled = n));
+                  }}
                   className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 ${camOn ? "bg-emerald-500/20 text-emerald-200" : "bg-white/10 text-white/70"}`}
                   aria-pressed={camOn}
                   aria-label={camOn ? "Camera on" : "Camera off"}
@@ -279,7 +321,11 @@ function MeetingRoom() {
               )}
             </div>
 
-            {error && <p className="mt-3 text-sm text-rose-400" role="alert">{error}</p>}
+            {error && (
+              <p className="mt-3 text-sm text-rose-400" role="alert">
+                {error}
+              </p>
+            )}
 
             <button
               onClick={join}
@@ -308,7 +354,10 @@ function MeetingRoom() {
         <div className="text-center">
           <h1 className="font-display text-3xl font-bold">You left the meeting</h1>
           <p className="mt-2 text-white/60">Thanks for joining.</p>
-          <Link to="/" className="bg-gradient-primary mt-6 inline-flex rounded-xl px-5 py-2.5 text-sm font-semibold">
+          <Link
+            to="/"
+            className="bg-gradient-primary mt-6 inline-flex rounded-xl px-5 py-2.5 text-sm font-semibold"
+          >
             Back home
           </Link>
         </div>
@@ -318,10 +367,13 @@ function MeetingRoom() {
 
   const QualityIcon = quality === "offline" ? WifiOff : quality === "excellent" ? Wifi : Signal;
   const qualityColor =
-    quality === "offline" ? "text-rose-400"
-    : quality === "excellent" ? "text-emerald-400"
-    : quality === "good" ? "text-amber-300"
-    : "text-orange-400";
+    quality === "offline"
+      ? "text-rose-400"
+      : quality === "excellent"
+        ? "text-emerald-400"
+        : quality === "good"
+          ? "text-amber-300"
+          : "text-orange-400";
 
   return (
     <div className="flex min-h-dvh flex-col bg-black text-white">
@@ -329,7 +381,10 @@ function MeetingRoom() {
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 animate-pulse rounded-full bg-rose-500" aria-hidden />
           <span className="font-semibold">{slug}</span>
-          <span className={`ml-3 inline-flex items-center gap-1 ${qualityColor}`} title={`Connection: ${quality}`}>
+          <span
+            className={`ml-3 inline-flex items-center gap-1 ${qualityColor}`}
+            title={`Connection: ${quality}`}
+          >
             <QualityIcon className="h-3.5 w-3.5" aria-hidden />
             <span className="text-xs capitalize">{quality}</span>
           </span>
@@ -348,15 +403,25 @@ function MeetingRoom() {
         <div className="flex flex-1 items-center justify-center p-6">
           <div className="relative aspect-video w-full max-w-5xl overflow-hidden rounded-3xl bg-slate-900 ring-1 ring-white/10">
             {mode === "video" && camOn ? (
-              <video ref={videoRef} autoPlay muted playsInline className="h-full w-full object-cover" />
+              <video
+                ref={videoRef}
+                autoPlay
+                muted
+                playsInline
+                className="h-full w-full object-cover"
+              />
             ) : (
               <div className="flex h-full items-center justify-center">
                 <div className="text-center">
                   <div className="bg-gradient-primary mx-auto flex h-24 w-24 items-center justify-center rounded-full">
-                    <span className="font-display text-3xl font-bold">{name.charAt(0).toUpperCase()}</span>
+                    <span className="font-display text-3xl font-bold">
+                      {name.charAt(0).toUpperCase()}
+                    </span>
                   </div>
                   <p className="mt-3 font-semibold">{name}</p>
-                  <p className="text-xs text-white/50">{mode === "audio" ? "Audio only" : "Camera off"}</p>
+                  <p className="text-xs text-white/50">
+                    {mode === "audio" ? "Audio only" : "Camera off"}
+                  </p>
                 </div>
               </div>
             )}
@@ -369,24 +434,38 @@ function MeetingRoom() {
         </div>
 
         {showParticipants && (
-          <aside className="hidden w-64 shrink-0 border-l border-white/10 bg-slate-950/60 p-3 md:block" aria-label="Participants">
+          <aside
+            className="hidden w-64 shrink-0 border-l border-white/10 bg-slate-950/60 p-3 md:block"
+            aria-label="Participants"
+          >
             <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-wider text-white/60">
               <span>Participants · {participants.length}</span>
             </div>
             <ul className="space-y-1.5">
               {participants.map((p) => (
-                <li key={p.id} className="flex items-center gap-2 rounded-lg bg-white/5 px-2 py-1.5 text-sm">
+                <li
+                  key={p.id}
+                  className="flex items-center gap-2 rounded-lg bg-white/5 px-2 py-1.5 text-sm"
+                >
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-xs font-bold">
                     {p.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1 truncate">
                     {p.name} {p.self && <span className="text-white/40">(you)</span>}
                   </div>
-                  {p.handRaised && <Hand className="h-3.5 w-3.5 text-amber-300" aria-label="Hand raised" />}
-                  {p.micOn ? <Mic className="h-3.5 w-3.5 text-emerald-300" aria-label="Mic on" />
-                           : <MicOff className="h-3.5 w-3.5 text-rose-300" aria-label="Mic muted" />}
-                  {p.camOn ? <Video className="h-3.5 w-3.5 text-emerald-300" aria-label="Cam on" />
-                           : <VideoOff className="h-3.5 w-3.5 text-white/40" aria-label="Cam off" />}
+                  {p.handRaised && (
+                    <Hand className="h-3.5 w-3.5 text-amber-300" aria-label="Hand raised" />
+                  )}
+                  {p.micOn ? (
+                    <Mic className="h-3.5 w-3.5 text-emerald-300" aria-label="Mic on" />
+                  ) : (
+                    <MicOff className="h-3.5 w-3.5 text-rose-300" aria-label="Mic muted" />
+                  )}
+                  {p.camOn ? (
+                    <Video className="h-3.5 w-3.5 text-emerald-300" aria-label="Cam on" />
+                  ) : (
+                    <VideoOff className="h-3.5 w-3.5 text-white/40" aria-label="Cam off" />
+                  )}
                 </li>
               ))}
             </ul>

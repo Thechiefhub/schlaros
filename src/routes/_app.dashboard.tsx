@@ -2,8 +2,16 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
-  FileText, ClipboardList, BookOpen, FolderOpen, Bot, Database,
-  ArrowRight, Sparkles, AlertCircle, Calendar,
+  FileText,
+  ClipboardList,
+  BookOpen,
+  FolderOpen,
+  Bot,
+  Database,
+  ArrowRight,
+  Sparkles,
+  AlertCircle,
+  Calendar,
 } from "lucide-react";
 
 export const Route = createFileRoute("/_app/dashboard")({
@@ -19,7 +27,12 @@ export const Route = createFileRoute("/_app/dashboard")({
 const TEACHER = "Tolulope";
 
 const METRICS = [
-  { label: "Lesson Notes", value: 0, icon: FileText, gradient: "from-purple-400 via-pink-400 to-orange-400" },
+  {
+    label: "Lesson Notes",
+    value: 0,
+    icon: FileText,
+    gradient: "from-purple-400 via-pink-400 to-orange-400",
+  },
   { label: "Assessments", value: 0, icon: ClipboardList, gradient: "from-blue-400 to-cyan-300" },
   { label: "Lesson Plans", value: 0, icon: BookOpen, gradient: "from-emerald-400 to-teal-300" },
   { label: "Resources", value: 0, icon: FolderOpen, gradient: "from-amber-400 to-pink-400" },
@@ -75,7 +88,10 @@ function Dashboard() {
   const belowFifty = STUDENTS.filter((s) => s.avg < 50);
   const student = STUDENTS.find((s) => s.name === selected)!;
   const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   return (
@@ -140,7 +156,9 @@ function Dashboard() {
                   className="glass group flex items-center justify-between rounded-2xl p-5 transition-all hover:-translate-y-1 hover:shadow-xl"
                 >
                   <div className="flex items-center gap-4">
-                    <div className={`${a.color} flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md`}>
+                    <div
+                      className={`${a.color} flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md`}
+                    >
                       <Icon className="h-5 w-5" />
                     </div>
                     <div className="font-semibold">{a.label}</div>
@@ -164,7 +182,9 @@ function Dashboard() {
               <tr>
                 <th className="text-left text-xs font-semibold text-muted-foreground">Subject</th>
                 {CLASSES.map((c) => (
-                  <th key={c} className="text-xs font-semibold text-muted-foreground">{c}</th>
+                  <th key={c} className="text-xs font-semibold text-muted-foreground">
+                    {c}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -177,7 +197,9 @@ function Dashboard() {
                     const g = gradeFor(v);
                     return (
                       <td key={c} className="p-1">
-                        <div className={`rounded-lg px-2 py-2 text-center text-xs font-semibold ${g.cls}`}>
+                        <div
+                          className={`rounded-lg px-2 py-2 text-center text-xs font-semibold ${g.cls}`}
+                        >
                           {g.label}
                         </div>
                       </td>
@@ -212,7 +234,9 @@ function Dashboard() {
           className="w-full max-w-sm rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-medium shadow-sm focus:ring-2 focus:ring-primary focus:outline-none"
         >
           {STUDENTS.map((s) => (
-            <option key={s.name} value={s.name}>{s.name}</option>
+            <option key={s.name} value={s.name}>
+              {s.name}
+            </option>
           ))}
         </select>
 
@@ -225,7 +249,10 @@ function Dashboard() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="text-lg font-bold">{student.name}</div>
-              <div className="text-sm text-muted-foreground">Class: {student.class} · Average: <span className="font-semibold text-foreground">{student.avg}%</span></div>
+              <div className="text-sm text-muted-foreground">
+                Class: {student.class} · Average:{" "}
+                <span className="font-semibold text-foreground">{student.avg}%</span>
+              </div>
             </div>
             <button
               onClick={() => console.log(`Generating parent meeting notes for ${student.name}`)}
@@ -258,7 +285,9 @@ function Dashboard() {
           <h2 className="mb-4 text-xl font-bold">Recent Lesson Notes</h2>
           <div className="rounded-2xl border border-dashed border-border p-8 text-center">
             <FileText className="mx-auto h-10 w-10 text-muted-foreground" />
-            <p className="mt-3 text-sm text-muted-foreground">No lesson notes yet. Create your first one!</p>
+            <p className="mt-3 text-sm text-muted-foreground">
+              No lesson notes yet. Create your first one!
+            </p>
             <Link
               to="/lesson-notes"
               className="bg-gradient-primary mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold text-white"
@@ -278,7 +307,9 @@ function Dashboard() {
               >
                 <div>
                   <div className="text-sm font-bold">{a.type}</div>
-                  <div className="text-xs text-muted-foreground">{a.subject} · {a.class}</div>
+                  <div className="text-xs text-muted-foreground">
+                    {a.subject} · {a.class}
+                  </div>
                 </div>
                 <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[10px] font-bold tracking-wide text-amber-700 uppercase">
                   draft
